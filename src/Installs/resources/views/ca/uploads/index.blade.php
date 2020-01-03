@@ -186,7 +186,7 @@ $(function () {
     });
     @endif
 
-	@la_field_access("Uploads", "caption", "write")
+	@ca_field_access("Uploads", "caption", "write")
     $(".file-info-form input[name=caption]").on("blur", function() {
         // TODO: Update Caption
         $.ajax({
@@ -199,7 +199,7 @@ $(function () {
             }
         });
     });
-	@endla_field_access
+	@endca_field_access
 
     @if(config('crmadmin.uploads.allow_filename_change') && Module::hasFieldAccess("Uploads", "name", "write"))
     $(".file-info-form input[name=filename]").on("blur", function() {

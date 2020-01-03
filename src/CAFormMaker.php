@@ -857,7 +857,7 @@ class CAFormMaker
 	}
 
 	/**
-	* Print form using blade directive @la_form
+	* Print form using blade directive @ca_form
 	**/
 	public static function form($module, $fields = [])
 	{

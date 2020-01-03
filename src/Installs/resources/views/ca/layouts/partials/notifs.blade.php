@@ -153,7 +153,7 @@
 						</ul>
 					</li>
 				@endif
-				@if(LAConfigs::getByKey('show_rightsidebar'))
+				@if(CAConfigs::getByKey('show_rightsidebar'))
 				<!-- Control Sidebar Toggle Button -->
 				<li>
 					<a href="#" data-toggle="control-sidebar"><i class="fa fa-comments-o"></i> <span class="label label-warning">10</span></a>

@@ -1,7 +1,7 @@
 <?php
 /**
- * Controller genrated using LaraAdmin
- * Help: http://laraadmin.com
+ * Controller genrated using CRM Admin
+ * Help: http://
  */
 
 namespace Kipl\Crmadmin\Controllers;
@@ -106,7 +106,7 @@ class MenuController extends Controller
         // $ftypes = ModuleFieldTypes::getFTypes2();
         // $module = Module::find($id);
         // $module = Module::get($module->name);
-        // return view('la.modules.show', [
+        // return view('ca.modules.show', [
         //     'no_header' => true,
         //     'no_padding' => "no-padding",
         //     'ftypes' => $ftypes

@@ -56,7 +56,7 @@
 
     </div><!-- /.login-box -->
 
-    @include('la.layouts.partials.scripts_auth')
+    @include('ca.layouts.partials.scripts_auth')
 
     <script>
         $(function () {

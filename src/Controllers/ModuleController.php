@@ -1,7 +1,7 @@
 <?php
 /**
- * Controller genrated using LaraAdmin
- * Help: http://laraadmin.com
+ * Controller genrated using CRM Admin
+ * Help: http://
  */
 
 namespace Kipl\Crmadmin\Controllers;

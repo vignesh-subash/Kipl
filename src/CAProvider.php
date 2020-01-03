@@ -65,7 +65,7 @@ class CAProvider extends ServiceProvider
     {
         include __DIR__.'/routes.php';
 
-		// For LAEditor
+		// For CAEditor
 		if(file_exists(__DIR__.'/../../laeditor')) {
 			include __DIR__.'/../../laeditor/src/routes.php';
 		}
@@ -133,7 +133,7 @@ class CAProvider extends ServiceProvider
         $this->app->make('\Kipl\Crmadmin\Controllers\FieldController');
         $this->app->make('\Kipl\Crmadmin\Controllers\MenuController');
 
-    		// For LAEditor
+    		// For CAEditor
     		if(file_exists(__DIR__.'/../../laeditor')) {
     			$this->app->make('Kipl\Laeditor\Controllers\CodeEditorController');
     		}

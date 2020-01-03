@@ -58,7 +58,7 @@ class UploadsController extends Controller
 		$module = Module::get('Uploads');
 
 		if(Module::hasAccess($module->id)) {
-			return View('la.uploads.index', [
+			return View('ca.uploads.index', [
 				'show_actions' => $this->show_action,
 				'listing_cols' => $this->listing_cols,
 				'module' => $module
@@ -118,7 +118,7 @@ class UploadsController extends Controller
                     $path = $thumbpath;
                 } else {
                     // Create Thumbnail
-                    LAHelper::createThumbnail($upload->path, $thumbpath, $size, $size, "transparent");
+                    CAHelper::createThumbnail($upload->path, $thumbpath, $size, $size, "transparent");
                     $path = $thumbpath;
                 }
             }

@@ -1,4 +1,4 @@
-@extends("la.layouts.app")
+@extends("ca.layouts.app")
 
 @section("contentheader_title", "Departments")
 @section("contentheader_description", "departments listing")

@@ -129,7 +129,7 @@ class CodeGenerator
 
         $templateDirectory = __DIR__.'/stubs';
 
-        LAHelper::log("info", "Appending routes...", $comm);
+        CAHelper::log("info", "Appending routes...", $comm);
         if(\Kipl\Crmadmin\Helpers\CAHelper::laravel_ver() == 5.5) {
 			$routesFile = base_path('routes/admin_routes.php');
 		} else {
@@ -155,7 +155,7 @@ class CodeGenerator
 
         // $templateDirectory = __DIR__.'/stubs';
 
-        LAHelper::log("info", "Appending Menu...", $comm);
+        CAHelper::log("info", "Appending Menu...", $comm);
         if(Menu::where("url", $config->dbTableName)->count() == 0) {
             Menu::create([
                 "name" => $config->moduleName,
@@ -167,10 +167,10 @@ class CodeGenerator
         }
 
         // Old Method to add Menu
-        // $menu = '<li><a href="{{ url(config("crmadmin.adminRoute") . '."'".'/'.$config->dbTableName."'".') }}"><i class="fa fa-cube"></i> <span>'.$config->moduleName.'</span></a></li>'."\n".'            <!-- LAMenus -->';
-        // $md = file_get_contents(base_path('resources/views/la/layouts/partials/sidebar.blade.php'));
-        // $md = str_replace("<!-- LAMenus -->", $menu, $md);
-        // file_put_contents(base_path('resources/views/la/layouts/partials/sidebar.blade.php'), $md);
+        // $menu = '<li><a href="{{ url(config("crmadmin.adminRoute") . '."'".'/'.$config->dbTableName."'".') }}"><i class="fa fa-cube"></i> <span>'.$config->moduleName.'</span></a></li>'."\n".'            <!-- CAMenus -->';
+        // $md = file_get_contents(base_path('resources/views/ca/layouts/partials/sidebar.blade.php'));
+        // $md = str_replace("<!-- CAMenus -->", $menu, $md);
+        // file_put_contents(base_path('resources/views/ca/layouts/partials/sidebar.blade.php'), $md);
     }
 
 	/**

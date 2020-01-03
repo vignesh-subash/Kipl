@@ -1,10 +1,10 @@
 <?php
 /**
- * Command for LaraAdmin Package Development
- * Help: http://laraadmin.com
+ * Command for CRM Admin Package Development
+ * Help: http://
  */
 
-namespace Kipl\Laraadmin\Commands;
+namespace Kipl\Crmadmin\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;

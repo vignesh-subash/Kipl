@@ -81,15 +81,15 @@
 			</div>
 		</div>
 		<div class="col-md-1 actions">
-			@la_access("Organizations", "edit")
+			@ca_access("Organizations", "edit")
 				<a href="{{ url(config('crmadmin.adminRoute') . '/organizations/'.$organization->id.'/edit') }}" class="btn btn-xs btn-edit btn-default"><i class="fa fa-pencil"></i></a><br>
-			@endla_access
+			@endca_access
 
-			@la_access("Organizations", "delete")
+			@ca_access("Organizations", "delete")
 				{{ Form::open(['route' => [config('crmadmin.adminRoute') . '.organizations.destroy', $organization->id], 'method' => 'delete', 'style'=>'display:inline']) }}
 					<button class="btn btn-default btn-delete btn-xs" type="submit"><i class="fa fa-times"></i></button>
 				{{ Form::close() }}
-			@endla_access
+			@endca_access
 		</div>
 	</div>
 

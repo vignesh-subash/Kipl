@@ -16,7 +16,7 @@
 		<p>LaraAdmin Code Editor does not comes inbuilt now. You can get it by following commands.</p>
 		<pre><code>composer require dwij/laeditor</code></pre>
 		<p>This will download the editor package. Not install editor by following command:</p>
-		<pre><code>php artisan la:editor</code></pre>
+		<pre><code>php artisan crma:editor</code></pre>
 		<p>Now refresh this page or go to <a href="{{ url(config('crmadmin.adminRoute') . '/laeditor') }}">{{ url(config('crmadmin.adminRoute') . '/laeditor') }}</a>.</p>
 	</div>
 </div>

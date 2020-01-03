@@ -1,10 +1,10 @@
 <?php
 /**
- * Command for LaraAdmin Installation
- * Help: http://laraadmin.com
+ * Command for CRM Admin Installation
+ * Help: http://
  */
 
-namespace Kipl\Laraadmin\Commands;
+namespace Kipl\Crmadmin\Commands;
 
 use Exception;
 use Illuminate\Console\Command;
@@ -154,11 +154,11 @@ class CAInstall extends Command
 				$this->line("\nDefault admin url route is /admin");
 				if ($this->confirm('Would you like to customize this url ?', false)) {
 					$custom_admin_route = $this->ask('Custom admin route:', 'admin');
-					$laconfigfile =  $this->openFile($to."/config/laraadmin.php");
-					$arline = LAHelper::getLineWithString($to."/config/laraadmin.php", "'adminRoute' => 'admin',");
+					$laconfigfile =  $this->openFile($to."/config/crmadmin.php");
+					$arline = CAHelper::getLineWithString($to."/config/crmadmin.php", "'adminRoute' => 'admin',");
 					$laconfigfile = str_replace($arline, "    'adminRoute' => '" . $custom_admin_route . "',", $laconfigfile);
-					file_put_contents($to."/config/laraadmin.php", $laconfigfile);
-					config(['laraadmin.adminRoute' => $custom_admin_route]);
+					file_put_contents($to."/config/crmadmin.php", $laconfigfile);
+					config(['crmadmin.adminRoute' => $custom_admin_route]);
 				}
 				*/
 

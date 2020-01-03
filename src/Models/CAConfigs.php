@@ -1,6 +1,6 @@
 <?php
 
-namespace Kipl\Laraadmin\Models;
+namespace Kipl\Crmadmin\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;

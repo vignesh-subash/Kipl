@@ -1,6 +1,6 @@
 <?php
 
-namespace Kipl\Laraadmin\Helpers;
+namespace Kipl\Crmadmin\Helpers;
 
 use DB;
 use Log;
@@ -81,7 +81,7 @@ class CAHelper
 		return $tables_out2;
     }
 
-	// $modules = LAHelper::getModuleNames([]);
+	// $modules = CAHelper::getModuleNames([]);
     public static function getModuleNames($remove_modules = []) {
         $modules = Module::all();
 
