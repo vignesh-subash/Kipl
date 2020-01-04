@@ -5,13 +5,13 @@
     "minimum-stability": "dev",
     "require": {
         "illuminate/support": "5.*",
-        "illuminate/container": "5.8|5.1",
-        "laravelcollective/html": "5.8|5.1",
+        "illuminate/container": "^5.4|5.1",
+        "laravelcollective/html": "^5.4.1",
         "yajra/laravel-datatables-oracle": "~6.0",
-        "creativeorange/gravatar": "1.0",
+        "creativeorange/gravatar": "^1.0",
         "doctrine/dbal": "~2.3",
         "zizaco/entrust": "1.7.0",
-        "spatie/laravel-backup": "3.0.0"
+        "spatie/laravel-backup": "^3.0.0"
     },
     "authors": [
         {
