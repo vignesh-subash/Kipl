@@ -84,7 +84,7 @@ class DatabaseSeeder extends Seeder
 
 		$caconfig = new CAConfigs;
 		$caconfig->key = "sitename";
-		$caconfig->value = "CRM Admin 1.0";
+		$caconfig->value = "CRM Admin";
 		$caconfig->save();
 
 		$caconfig = new CAConfigs;
@@ -94,7 +94,7 @@ class DatabaseSeeder extends Seeder
 
 		$caconfig = new CAConfigs;
 		$caconfig->key = "sitename_part2";
-		$caconfig->value = "Admin 1.0";
+		$caconfig->value = "Admin";
 		$caconfig->save();
 
 		$caconfig = new CAConfigs;

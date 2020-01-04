@@ -81,17 +81,9 @@
             <div class="col-lg-2">
                 <h5>Amazing Functionalities</h5>
                 <p>for Modern Admin Panels</p>
-                <img class="hidden-xs hidden-sm hidden-md" src="{{ asset('/la-assets/img/arrow1.png') }}">
+
             </div>
-            <div class="col-lg-8">
-                <img class="img-responsive" src="{{ asset('/la-assets/img/app-bg.png') }}" alt="">
-            </div>
-            <div class="col-lg-2">
-                <br>
-                <img class="hidden-xs hidden-sm hidden-md" src="{{ asset('/la-assets/img/arrow2.png') }}">
-                <h5>Completely Packaged...</h5>
-                <p>for Future expantion of Modules</p>
-            </div>
+
         </div>
     </div> <!--/ .container -->
 </div><!--/ #headerwrap -->
@@ -135,7 +127,7 @@
             </div>
 
             <div class="col-lg-7">
-				<h3 class="feature-title">What is LaraAdmin ?</h3><br>
+				<h3 class="feature-title">What is CRM Admin ?</h3><br>
 				<ol class="features">
 					<li><strong>CMS</strong> (Content Management System) &#8211; Manages Modules &amp; their Data</li>
 					<li>Backend <strong>Admin Panel</strong> &#8211; Data can be used in front end applications with ease.</li>
@@ -163,7 +155,7 @@
             <h3>Contact Us</h3><br>
             <p>
 			KIPL<br/>
-				Web Development Company in Pune,<br/>
+				Web Development Company in Chennai,<br/>
                 Kodambakkam,<br/>
 
                 Chennai, India - 600034
@@ -198,7 +190,7 @@
 <div id="c">
     <div class="container">
         <p>
-            <strong>Copyright &copy; 2016. Powered by <a href="https://krishcoinfolabs.com"><b>krishcoinfolabs</b></a>
+            <strong>Copyright &copy; 2020. Powered by <a href="https://krishcoinfolabs.com"><b>krishcoinfolabs</b></a>
         </p>
     </div>
 </div>
