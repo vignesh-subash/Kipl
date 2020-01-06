@@ -3,8 +3,8 @@
  * Migration generated using LaraAdmin
  * Help: http://laraadmin.com
  * LaraAdmin is open-sourced software licensed under the MIT license.
- * Developed by: Dwij IT Solutions
- * Developer Website: http://dwijitsolutions.com
+ * Developed by: Kipl IT Solutions
+ * Developer Website: http://kipl.com
  */
 
 use Illuminate\Support\Facades\Schema;
@@ -20,7 +20,7 @@ class CreateLaConfigsTable extends Migration
      */
     public function up()
     {
-        Schema::create('la_configs', function (Blueprint $table) {
+        Schema::create('ca_configs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('key', 50);
 			$table->string('section', 100)->default("");
@@ -36,6 +36,6 @@ class CreateLaConfigsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('la_configs');
+        Schema::drop('ca_configs');
     }
 }

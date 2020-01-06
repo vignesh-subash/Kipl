@@ -3,13 +3,13 @@
  * Migration generated using LaraAdmin
  * Help: http://laraadmin.com
  * LaraAdmin is open-sourced software licensed under the MIT license.
- * Developed by: Dwij IT Solutions
- * Developer Website: http://dwijitsolutions.com
+ * Developed by: Kipl IT Solutions
+ * Developer Website: http://kipl.com
  */
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Dwij\Laraadmin\Models\Module;
+use Kipl\Laraadmin\Models\Module;
 
 class CreateRolesTable extends Migration
 {

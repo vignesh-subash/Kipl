@@ -1,10 +1,10 @@
 <?php
 /**
- * Model generated using LaraAdmin
- * Help: http://laraadmin.com
- * LaraAdmin is open-sourced software licensed under the MIT license.
- * Developed by: Dwij IT Solutions
- * Developer Website: http://dwijitsolutions.com
+ * Model generated using CrmAdmin
+ * Help: http://crmadmin.com
+ * CrmAdmin is open-sourced software licensed under the MIT license.
+ * Developed by: Kipl IT Solutions
+ * Developer Website: http://kipl.com
  */
 
 namespace App;
@@ -27,7 +27,7 @@ class User extends Authenticatable implements AuthorizableContract, CanResetPass
     use EntrustUserTrait;
 
     protected $table = 'users';
-	
+
 	/**
      * The attributes that are mass assignable.
      *
@@ -36,7 +36,7 @@ class User extends Authenticatable implements AuthorizableContract, CanResetPass
 	protected $fillable = [
 		'name', 'email', 'password', "role", "context_id", "type"
 	];
-	
+
 	/**
      * The attributes that should be hidden for arrays.
      *
@@ -45,7 +45,7 @@ class User extends Authenticatable implements AuthorizableContract, CanResetPass
 	protected $hidden = [
 		'password', 'remember_token',
     ];
-    
+
     // protected $dates = ['deleted_at'];
 
     /**

@@ -36,7 +36,7 @@ class OrganizationsController extends Controller
 		$module = Module::get('Organizations');
 
 		if(Module::hasAccess($module->id)) {
-			return View('la.organizations.index', [
+			return View('ca.organizations.index', [
 				'show_actions' => $this->show_action,
 				'listing_cols' => Module::getListingColumns('Organizations'),
 				'module' => $module
@@ -98,7 +98,7 @@ class OrganizationsController extends Controller
 				$module = Module::get('Organizations');
 				$module->row = $organization;
 
-				return view('la.organizations.show', [
+				return view('ca.organizations.show', [
 					'module' => $module,
 					'view_col' => $module->view_col,
 					'no_header' => true,
@@ -130,7 +130,7 @@ class OrganizationsController extends Controller
 
 				$module->row = $organization;
 
-				return view('la.organizations.edit', [
+				return view('ca.organizations.edit', [
 					'module' => $module,
 					'view_col' => $module->view_col,
 				])->with('organization', $organization);

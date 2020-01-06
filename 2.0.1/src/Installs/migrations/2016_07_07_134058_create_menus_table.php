@@ -3,8 +3,8 @@
  * Migration generated using LaraAdmin
  * Help: http://laraadmin.com
  * LaraAdmin is open-sourced software licensed under the MIT license.
- * Developed by: Dwij IT Solutions
- * Developer Website: http://dwijitsolutions.com
+ * Developed by: Kipl IT Solutions
+ * Developer Website: http://kipl.com
  */
 
 use Illuminate\Support\Facades\Schema;
@@ -20,7 +20,7 @@ class CreateMenusTable extends Migration
      */
     public function up()
     {
-        Schema::create('la_menus', function (Blueprint $table) {
+        Schema::create('ca_menus', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 50);
             $table->string('url', 256);
@@ -39,8 +39,8 @@ class CreateMenusTable extends Migration
      */
     public function down()
     {
-        if (Schema::hasTable('la_menus')) {
-            Schema::drop('la_menus');
+        if (Schema::hasTable('ca_menus')) {
+            Schema::drop('ca_menus');
         }
     }
 }
