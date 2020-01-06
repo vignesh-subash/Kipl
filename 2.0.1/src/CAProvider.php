@@ -1,29 +1,29 @@
 <?php
 /**
- * Code generated using LaraAdmin
- * Help: http://laraadmin.com
- * LaraAdmin is open-sourced software licensed under the MIT license.
- * Developed by: Dwij IT Solutions
- * Developer Website: http://dwijitsolutions.com
+ * Code generated using CrmAdmin
+ * Help: http://crmadmin.com
+ * CrmAdmin is open-sourced software licensed under the MIT license.
+ * Developed by: Kipl IT Solutions
+ * Developer Website: http://kipl.com
  */
 
-namespace Dwij\Laraadmin;
+namespace Kipl\Crmadmin;
 
 use Artisan;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
-use Dwij\Laraadmin\Helpers\LAHelper;
+use Kipl\Crmadmin\Helpers\CAHelper;
 
 /**
- * Class LAProvider
- * @package Dwij\Laraadmin
+ * Class CAProvider
+ * @package Kipl\Crmadmin
  *
- * This is LaraAdmin Service Provider which looks after managing aliases, other required providers, blade directives
+ * This is CrmAdmin Service Provider which looks after managing aliases, other required providers, blade directives
  * and Commands.
  */
-class LAProvider extends ServiceProvider
+class CAProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -32,44 +32,44 @@ class LAProvider extends ServiceProvider
      */
     public function boot()
     {
-        // @mkdir(base_path('resources/laraadmin'));
-        // @mkdir(base_path('database/migrations/laraadmin'));
+        // @mkdir(base_path('resources/crmadmin'));
+        // @mkdir(base_path('database/migrations/crmadmin'));
         /*
         $this->publishes([
-            __DIR__.'/Templates' => base_path('resources/laraadmin'),
-            __DIR__.'/config.php' => base_path('config/laraadmin.php'),
-            __DIR__.'/Migrations' => base_path('database/migrations/laraadmin')
+            __DIR__.'/Templates' => base_path('resources/crmadmin'),
+            __DIR__.'/config.php' => base_path('config/crmadmin.php'),
+            __DIR__.'/Migrations' => base_path('database/migrations/crmadmin')
         ]);
         */
-        //echo "Laraadmin Migrations started...";
-        // Artisan::call('migrate', ['--path' => "vendor/dwij/laraadmin/src/Migrations/"]);
+        //echo "Crmadmin Migrations started...";
+        // Artisan::call('migrate', ['--path' => "vendor/dwij/crmadmin/src/Migrations/"]);
         //echo "Migrations completed !!!.";
-        // Execute by php artisan vendor:publish --provider="Dwij\Laraadmin\LAProvider"
-        
+        // Execute by php artisan vendor:publish --provider="Kipl\Crmadmin\CAProvider"
+
         /*
         |--------------------------------------------------------------------------
-        | Blade Directives for Entrust not working in Laravel 5.3
+        | Blade Directives for Entrust not working in Laravel 5.5
         |--------------------------------------------------------------------------
         */
-        if(LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.4) {
-            
+        if(CAHelper::laravel_ver() == 5.5 || CAHelper::laravel_ver() == 5.6) {
+
             // Call to Entrust::hasRole
             Blade::directive('role', function ($expression) {
                 return "<?php if (\\Entrust::hasRole({$expression})) : ?>";
             });
-            
+
             // Call to Entrust::can
             Blade::directive('permission', function ($expression) {
                 return "<?php if (\\Entrust::can({$expression})) : ?>";
             });
-            
+
             // Call to Entrust::ability
             Blade::directive('ability', function ($expression) {
                 return "<?php if (\\Entrust::ability({$expression})) : ?>";
             });
         }
     }
-    
+
     /**
      * Register the application services including routes, Required Providers, Alias, Controllers, Blade Directives
      * and Commands.
@@ -79,18 +79,18 @@ class LAProvider extends ServiceProvider
     public function register()
     {
         include __DIR__ . '/routes.php';
-        
+
         // For LAEditor
         if(file_exists(__DIR__ . '/../../laeditor')) {
             include __DIR__ . '/../../laeditor/src/routes.php';
         }
-        
+
         /*
         |--------------------------------------------------------------------------
         | Providers
         |--------------------------------------------------------------------------
         */
-        
+
         // Collective HTML & Form Helper
         $this->app->register(\Collective\Html\HtmlServiceProvider::class);
         // For Datatables
@@ -101,128 +101,128 @@ class LAProvider extends ServiceProvider
         $this->app->register(\Zizaco\Entrust\EntrustServiceProvider::class);
         // For Spatie Backup
         $this->app->register(\Spatie\Backup\BackupServiceProvider::class);
-        
+
         /*
         |--------------------------------------------------------------------------
         | Register the Alias
         |--------------------------------------------------------------------------
         */
-        
+
         $loader = AliasLoader::getInstance();
-        
+
         // Collective HTML & Form Helper
         $loader->alias('Form', \Collective\Html\FormFacade::class);
         $loader->alias('HTML', \Collective\Html\HtmlFacade::class);
-        
+
         // For Gravatar User Profile Pics
         $loader->alias('Gravatar', \Creativeorange\Gravatar\Facades\Gravatar::class);
-        
-        // For LaraAdmin Code Generation
-        $loader->alias('CodeGenerator', \Dwij\Laraadmin\CodeGenerator::class);
-        
-        // For LaraAdmin Form Helper
-        $loader->alias('LAFormMaker', \Dwij\Laraadmin\LAFormMaker::class);
-        
-        // For LaraAdmin Helper
-        $loader->alias('LAHelper', \Dwij\Laraadmin\Helpers\LAHelper::class);
-        
-        // LaraAdmin Module Model 
-        $loader->alias('Module', \Dwij\Laraadmin\Models\Module::class);
-        
-        // For LaraAdmin Configuration Model
-        $loader->alias('LAConfigs', \Dwij\Laraadmin\Models\LAConfigs::class);
-        
+
+        // For CrmAdmin Code Generation
+        $loader->alias('CodeGenerator', \Kipl\Crmadmin\CodeGenerator::class);
+
+        // For CrmAdmin Form Helper
+        $loader->alias('CAFormMaker', \Kipl\Crmadmin\CAFormMaker::class);
+
+        // For CrmAdmin Helper
+        $loader->alias('CAHelper', \Kipl\Crmadmin\Helpers\CAHelper::class);
+
+        // CrmAdmin Module Model
+        $loader->alias('Module', \Kipl\Crmadmin\Models\Module::class);
+
+        // For CrmAdmin Configuration Model
+        $loader->alias('CAConfigs', \Kipl\Crmadmin\Models\CAConfigs::class);
+
         // For Entrust
         $loader->alias('Entrust', \Zizaco\Entrust\EntrustFacade::class);
         $loader->alias('role', \Zizaco\Entrust\Middleware\EntrustRole::class);
         $loader->alias('permission', \Zizaco\Entrust\Middleware\EntrustPermission::class);
         $loader->alias('ability', \Zizaco\Entrust\Middleware\EntrustAbility::class);
-        
+
         /*
         |--------------------------------------------------------------------------
         | Register the Controllers
         |--------------------------------------------------------------------------
         */
-        
-        $this->app->make('Dwij\Laraadmin\Controllers\ModuleController');
-        $this->app->make('Dwij\Laraadmin\Controllers\FieldController');
-        $this->app->make('Dwij\Laraadmin\Controllers\MenuController');
-        
+
+        $this->app->make('Kipl\Crmadmin\Controllers\ModuleController');
+        $this->app->make('Kipl\Crmadmin\Controllers\FieldController');
+        $this->app->make('Kipl\Crmadmin\Controllers\MenuController');
+
         // For LAEditor
         if(file_exists(__DIR__ . '/../../laeditor')) {
-            $this->app->make('Dwij\Laeditor\Controllers\CodeEditorController');
+            $this->app->make('Kipl\Laeditor\Controllers\CodeEditorController');
         }
-        
+
         /*
         |--------------------------------------------------------------------------
         | Blade Directives
         |--------------------------------------------------------------------------
         */
-        
+
         // LAForm Input Maker
-        Blade::directive('la_input', function ($expression) {
-            if(LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.4) {
+        Blade::directive('ca_input', function ($expression) {
+            if(CAHelper::laravel_ver() == 5.5 || CAHelper::laravel_ver() == 5.6) {
                 $expression = "(" . $expression . ")";
             }
-            return "<?php echo LAFormMaker::input$expression; ?>";
+            return "<?php echo CAFormMaker::input$expression; ?>";
         });
-        
+
         // LAForm Form Maker
-        Blade::directive('la_form', function ($expression) {
-            if(LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.4) {
+        Blade::directive('ca_form', function ($expression) {
+            if(CAHelper::laravel_ver() == 5.5 || CAHelper::laravel_ver() == 5.6) {
                 $expression = "(" . $expression . ")";
             }
-            return "<?php echo LAFormMaker::form$expression; ?>";
+            return "<?php echo CAFormMaker::form$expression; ?>";
         });
-        
+
         // LAForm Maker - Display Values
-        Blade::directive('la_display', function ($expression) {
-            if(LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.4) {
+        Blade::directive('ca_display', function ($expression) {
+            if(CAHelper::laravel_ver() == 5.5 || CAHelper::laravel_ver() == 5.6) {
                 $expression = "(" . $expression . ")";
             }
-            return "<?php echo LAFormMaker::display$expression; ?>";
+            return "<?php echo CAFormMaker::display$expression; ?>";
         });
-        
+
         // LAForm Maker - Check Whether User has Module Access
-        Blade::directive('la_access', function ($expression) {
-            if(LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.4) {
+        Blade::directive('ca_access', function ($expression) {
+            if(CAHelper::laravel_ver() == 5.5 || CAHelper::laravel_ver() == 5.6) {
                 $expression = "(" . $expression . ")";
             }
-            return "<?php if(LAFormMaker::la_access$expression) { ?>";
+            return "<?php if(CAFormMaker::ca_access$expression) { ?>";
         });
-        Blade::directive('endla_access', function ($expression) {
+        Blade::directive('endca_access', function ($expression) {
             return "<?php } ?>";
         });
-        
+
         // LAForm Maker - Check Whether User has Module Field Access
-        Blade::directive('la_field_access', function ($expression) {
-            if(LAHelper::laravel_ver() == 5.3 || LAHelper::laravel_ver() == 5.4) {
+        Blade::directive('ca_field_access', function ($expression) {
+            if(CAHelper::laravel_ver() == 5.5 || CAHelper::laravel_ver() == 5.6) {
                 $expression = "(" . $expression . ")";
             }
-            return "<?php if(LAFormMaker::la_field_access$expression) { ?>";
+            return "<?php if(CAFormMaker::ca_field_access$expression) { ?>";
         });
-        Blade::directive('endla_field_access', function ($expression) {
+        Blade::directive('endca_field_access', function ($expression) {
             return "<?php } ?>";
         });
-        
+
         /*
         |--------------------------------------------------------------------------
         | Register the Commands
         |--------------------------------------------------------------------------
         */
-        
+
         $commands = [
-            \Dwij\Laraadmin\Commands\Migration::class,
-            \Dwij\Laraadmin\Commands\Crud::class,
-            \Dwij\Laraadmin\Commands\Packaging::class,
-            \Dwij\Laraadmin\Commands\LAInstall::class
+            \Kipl\Crmadmin\Commands\Migration::class,
+            \Kipl\Crmadmin\Commands\Crud::class,
+            \Kipl\Crmadmin\Commands\Packaging::class,
+            \Kipl\Crmadmin\Commands\CAInstall::class
         ];
-        
+
         // For LAEditor
         if(file_exists(__DIR__ . '/../../laeditor')) {
-            $commands[] = \Dwij\Laeditor\Commands\LAEditor::class;
+            $commands[] = \Kipl\Laeditor\Commands\LAEditor::class;
         }
-        
+
         $this->commands($commands);
     }
 }
