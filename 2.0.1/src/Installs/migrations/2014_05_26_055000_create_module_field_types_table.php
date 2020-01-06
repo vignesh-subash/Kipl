@@ -1,8 +1,8 @@
 <?php
 /**
- * Migration generated using LaraAdmin
- * Help: http://laraadmin.com
- * LaraAdmin is open-sourced software licensed under the MIT license.
+ * Migration generated using CrmAdmin
+ * Help: http://crmadmin.com
+ * CrmAdmin is open-sourced software licensed under the MIT license.
  * Developed by: Kipl IT Solutions
  * Developer Website: http://kipl.com
  */
@@ -10,7 +10,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Kipl\Laraadmin\Models\ModuleFieldTypes;
+use Kipl\Crmadmin\Models\ModuleFieldTypes;
 
 class CreateModuleFieldTypesTable extends Migration
 {

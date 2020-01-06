@@ -1,13 +1,13 @@
 <?php
 /**
- * Code generated using LaraAdmin
- * Help: http://laraadmin.com
- * LaraAdmin is open-sourced software licensed under the MIT license.
- * Developed by: Dwij IT Solutions
- * Developer Website: http://dwijitsolutions.com
+ * Code generated using CrmAdmin
+ * Help: http://crmadmin.com
+ * CrmAdmin is open-sourced software licensed under the MIT license.
+ * Developed by: Kipl IT Solutions
+ * Developer Website: http://kipl.com
  */
 
-namespace Dwij\Laraadmin\Models;
+namespace Kipl\Crmadmin\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
@@ -15,13 +15,13 @@ use Illuminate\Database\Schema\Blueprint;
 use Exception;
 use Log;
 use DB;
-use Dwij\Laraadmin\Helpers\LAHelper;
+use Kipl\Crmadmin\Helpers\CAHelper;
 
 /**
  * Class Module
- * @package Dwij\Laraadmin\Models
+ * @package Kipl\Crmadmin\Models
  *
- * Most important Model of LaraAdmin which looks after Module, ModuleField Generation.
+ * Most important Model of CrmAdmin which looks after Module, ModuleField Generation.
  * It also handles Module migrations via "generate" method to create Module Schema in Database.
  *
  */
@@ -49,7 +49,7 @@ class Module extends Model
     public static function generateBase($module_name, $icon)
     {
         
-        $names = LAHelper::generateModuleNames($module_name, $icon);
+        $names = CAHelper::generateModuleNames($module_name, $icon);
         
         // Check is Generated
         $is_gen = false;
@@ -91,7 +91,7 @@ class Module extends Model
     public static function generate($module_name, $module_name_db, $view_col, $faIcon = "fa-cube", $fields)
     {
         
-        $names = LAHelper::generateModuleNames($module_name, $faIcon);
+        $names = CAHelper::generateModuleNames($module_name, $faIcon);
         $fields = Module::format_fields($module_name, $fields);
         
         if(substr_count($view_col, " ") || substr_count($view_col, ".")) {
@@ -796,7 +796,7 @@ class Module extends Model
         $out = array();
         foreach($fields as $field) {
             // Check if field format is New
-            if(LAHelper::is_assoc_array($field)) {
+            if(CAHelper::is_assoc_array($field)) {
                 $obj = (object)$field;
                 
                 if(!isset($obj->colname)) {
@@ -988,7 +988,7 @@ class Module extends Model
     
     /**
      * Create Validations rules array for Laravel Validations using Module Field Context / Metadata
-     * Used in LaraAdmin generated Controllers for store and update.
+     * Used in CrmAdmin generated Controllers for store and update.
      * This generates array of validation rules for whole Module
      *
      *

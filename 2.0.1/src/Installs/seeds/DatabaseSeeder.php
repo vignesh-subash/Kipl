@@ -1,19 +1,19 @@
 <?php
 /**
- * Code generated using LaraAdmin
- * Help: http://laraadmin.com
- * LaraAdmin is open-sourced software licensed under the MIT license.
- * Developed by: Dwij IT Solutions
- * Developer Website: http://dwijitsolutions.com
+ * Code generated using CrmAdmin
+ * Help: http://crmadmin.com
+ * CrmAdmin is open-sourced software licensed under the MIT license.
+ * Developed by: Kipl IT Solutions
+ * Developer Website: http://kipl.com
  */
 
 use Illuminate\Database\Seeder;
 
-use Dwij\Laraadmin\Models\Module;
-use Dwij\Laraadmin\Models\ModuleFields;
-use Dwij\Laraadmin\Models\ModuleFieldTypes;
-use Dwij\Laraadmin\Models\Menu;
-use Dwij\Laraadmin\Models\LAConfigs;
+use Kipl\Crmadmin\Models\Module;
+use Kipl\Crmadmin\Models\ModuleFields;
+use Kipl\Crmadmin\Models\ModuleFieldTypes;
+use Kipl\Crmadmin\Models\Menu;
+use Kipl\Crmadmin\Models\CAConfigs;
 
 use App\Role;
 use App\Permission;
@@ -28,9 +28,9 @@ class DatabaseSeeder extends Seeder
 	 */
 	public function run()
 	{
-		
-		/* ================ LaraAdmin Seeder Code ================ */
-		
+
+		/* ================ CrmAdmin Seeder Code ================ */
+
 		// Generating Module Menus
 		$modules = Module::all();
 		$teamMenu = Menu::create([
@@ -56,14 +56,14 @@ class DatabaseSeeder extends Seeder
 				]);
 			}
 		}
-		
+
 		// Create Administration Department
 	   	$dept = new Department;
 		$dept->name = "Administration";
 		$dept->tags = "[]";
 		$dept->color = "#000";
 		$dept->save();
-		
+
 		// Create Super Admin Role
 		$role = new Role;
 		$role->name = "SUPER_ADMIN";
@@ -72,99 +72,99 @@ class DatabaseSeeder extends Seeder
 		$role->parent = 1;
 		$role->dept = $dept->id;
 		$role->save();
-		
+
 		// Set Full Access For Super Admin Role
 		foreach ($modules as $module) {
 			Module::setDefaultRoleAccess($module->id, $role->id, "full");
 		}
-		
+
 		// Create Admin Panel Permission
 		$perm = new Permission;
 		$perm->name = "ADMIN_PANEL";
 		$perm->display_name = "Admin Panel";
 		$perm->description = "Admin Panel Permission";
 		$perm->save();
-		
+
 		$role->attachPermission($perm);
-		
-		// Generate LaraAdmin Default Configurations
-		
-		$laconfig = new LAConfigs;
+
+		// Generate CrmAdmin Default Configurations
+
+		$laconfig = new CAConfigs;
 		$laconfig->key = "sitename";
-		$laconfig->value = "LaraAdmin 1.0";
+		$laconfig->value = "CrmAdmin 1.0";
 		$laconfig->save();
 
-		$laconfig = new LAConfigs;
+		$laconfig = new CAConfigs;
 		$laconfig->key = "sitename_part1";
 		$laconfig->value = "Lara";
 		$laconfig->save();
-		
-		$laconfig = new LAConfigs;
+
+		$laconfig = new CAConfigs;
 		$laconfig->key = "sitename_part2";
 		$laconfig->value = "Admin 1.0";
 		$laconfig->save();
-		
-		$laconfig = new LAConfigs;
+
+		$laconfig = new CAConfigs;
 		$laconfig->key = "sitename_short";
 		$laconfig->value = "LA";
 		$laconfig->save();
 
-		$laconfig = new LAConfigs;
+		$laconfig = new CAConfigs;
 		$laconfig->key = "site_description";
-		$laconfig->value = "LaraAdmin is a open-source Laravel Admin Panel for quick-start Admin based applications and boilerplate for CRM or CMS systems.";
+		$laconfig->value = "CrmAdmin is a open-source Laravel Admin Panel for quick-start Admin based applications and boilerplate for CRM or CMS systems.";
 		$laconfig->save();
 
 		// Display Configurations
-		
-		$laconfig = new LAConfigs;
+
+		$laconfig = new CAConfigs;
 		$laconfig->key = "sidebar_search";
 		$laconfig->value = "1";
 		$laconfig->save();
-		
-		$laconfig = new LAConfigs;
+
+		$laconfig = new CAConfigs;
 		$laconfig->key = "show_messages";
 		$laconfig->value = "1";
 		$laconfig->save();
-		
-		$laconfig = new LAConfigs;
+
+		$laconfig = new CAConfigs;
 		$laconfig->key = "show_notifications";
 		$laconfig->value = "1";
 		$laconfig->save();
-		
-		$laconfig = new LAConfigs;
+
+		$laconfig = new CAConfigs;
 		$laconfig->key = "show_tasks";
 		$laconfig->value = "1";
 		$laconfig->save();
-		
-		$laconfig = new LAConfigs;
+
+		$laconfig = new CAConfigs;
 		$laconfig->key = "show_rightsidebar";
 		$laconfig->value = "1";
 		$laconfig->save();
-		
-		$laconfig = new LAConfigs;
+
+		$laconfig = new CAConfigs;
 		$laconfig->key = "skin";
 		$laconfig->value = "skin-white";
 		$laconfig->save();
-		
-		$laconfig = new LAConfigs;
+
+		$laconfig = new CAConfigs;
 		$laconfig->key = "layout";
 		$laconfig->value = "fixed";
 		$laconfig->save();
 
 		// Admin Configurations
 
-		$laconfig = new LAConfigs;
+		$laconfig = new CAConfigs;
 		$laconfig->key = "default_email";
 		$laconfig->value = "test@example.com";
 		$laconfig->save();
-		
+
 		$modules = Module::all();
 		foreach ($modules as $module) {
 			$module->is_gen=true;
-			$module->save();	
+			$module->save();
 		}
 
 		/* ================ Call Other Seeders ================ */
-		
+
 	}
 }

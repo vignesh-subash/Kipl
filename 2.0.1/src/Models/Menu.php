@@ -1,30 +1,30 @@
 <?php
 /**
- * Code generated using LaraAdmin
- * Help: http://laraadmin.com
- * LaraAdmin is open-sourced software licensed under the MIT license.
- * Developed by: Dwij IT Solutions
- * Developer Website: http://dwijitsolutions.com
+ * Code generated using CrmAdmin
+ * Help: http://crmadmin.com
+ * CrmAdmin is open-sourced software licensed under the MIT license.
+ * Developed by: Kipl IT Solutions
+ * Developer Website: http://kipl.com
  */
 
-namespace Dwij\Laraadmin\Models;
+namespace Kipl\Crmadmin\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
-use Dwij\Laraadmin\Helpers\LAHelper;
+use Kipl\Crmadmin\Helpers\CAHelper;
 
 /**
  * Class Menu
- * @package Dwij\Laraadmin\Models
+ * @package Kipl\Crmadmin\Models
  *
  * Menu Model which looks after Menus in Sidebar and Navbar
  */
 class Menu extends Model
 {
-    protected $table = 'la_menus';
-    
+    protected $table = 'ca_menus';
+
     protected $guarded = [
-    
+
     ];
 }
