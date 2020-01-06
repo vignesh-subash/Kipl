@@ -170,7 +170,7 @@ class UploadsController extends Controller
 				$folder = storage_path('uploads');
 				$filename = $file->getClientOriginalName();
 
-				$date_append = date("Y-m-d-His-");
+				$date_append = date("d-m-Y-H:i:s-");
 				$upload_success = Input::file('file')->move($folder, $date_append.$filename);
 
 				if( $upload_success ) {

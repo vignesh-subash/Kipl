@@ -269,7 +269,7 @@ class Module extends Model
 				if(isset($var) && $field->defaultvalue != "" && !starts_with($field->defaultvalue, "date")) {
 					$var->default($field->defaultvalue);
 				} else if($field->required) {
-					$var->default("Y-m-d H:i:s");
+					$var->default("d-m-Y H:i:s");
 				}
 				break;
 			case 'Decimal':
@@ -1216,7 +1216,7 @@ class Module extends Model
 			$access_fields = "readonly";
 		}
 
-		$now = date("Y-m-d H:i:s");
+		$now = date("d-m-Y H:i:s");
 
 		// 1. Set Module Access
 
@@ -1259,7 +1259,7 @@ class Module extends Model
 			$access_fields = "readonly";
 		}
 
-		$now = date("Y-m-d H:i:s");
+		$now = date("d-m-Y H:i:s");
 
 		// find role field permission
 		$field_perm = DB::table('role_module_fields')->where('role_id', $role->id)->where('field_id', $field->id)->first();

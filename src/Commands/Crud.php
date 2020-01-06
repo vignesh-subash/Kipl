@@ -17,7 +17,7 @@ class Crud extends Command
      *
      * @var string
      */
-    protected $signature = 'crma:crud {module}';
+    protected $signature = 'ca:crud {module}';
 
     /**
      * The command description.

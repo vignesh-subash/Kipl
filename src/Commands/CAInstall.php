@@ -21,7 +21,7 @@ class CAInstall extends Command
 	 *
 	 * @var string
 	 */
-	protected $signature = 'crma:install';
+	protected $signature = 'ca:install';
 
 	/**
 	 * The command description.
@@ -59,8 +59,8 @@ class CAInstall extends Command
 					$db_data['host'] = $this->ask('Database Host', '127.0.0.1');
 					$db_data['port'] = $this->ask('Database Port', '3306');
 				}
-				$db_data['db'] = $this->ask('Database Name', 'crmadmin1');
-				$db_data['dbuser'] = $this->ask('Database User', 'root');
+				$db_data['db'] = $this->ask('Database Name', 'YOUR_DATABASE_NAME');
+				$db_data['dbuser'] = $this->ask('Database User', 'YOUR_USERNAME');
 				$dbpass = $this->ask('Database Password', false);
 
 				if($dbpass !== FALSE) {
@@ -183,7 +183,7 @@ class CAInstall extends Command
 				// https://github.com/Zizaco/entrust/issues/468
 				$driver_type = env('CACHE_DRIVER');
 				if($driver_type != "array") {
-					throw new Exception("Please set Cache Driver to array in .env (Required for Zizaco\Entrust) and run crma:install again:"
+					throw new Exception("Please set Cache Driver to array in .env (Required for Zizaco\Entrust) and run ca:install again:"
 							."\n\n\tCACHE_DRIVER=array\n\n", 1);
 				}
 
@@ -304,9 +304,9 @@ class CAInstall extends Command
 						'city' => "Chennai",
 						'address' => "Kodambakkam, Chennai 600034",
 						'about' => "About user / biography",
-						'date_birth' => date("d-m-Y"),
-						'date_hire' => date("d-m-Y"),
-						'date_left' => date("d-m-Y"),
+						'date_birth' => date("Y-m-d"),
+						'date_hire' => date("Y-m-d"),
+						'date_left' => date("Y-m-d"),
 						'salary_cur' => 0,
 					]);
 
@@ -325,10 +325,10 @@ class CAInstall extends Command
 		} catch (Exception $e) {
 			$msg = $e->getMessage();
 			if (strpos($msg, 'SQLSTATE') !== false) {
-				throw new Exception("CRMAInstall: Database is not connected. Connect database (.env) and run 'crma:install' again.\n".$msg, 1);
+				throw new Exception("CAInstall: Database is not connected. Connect database (.env) and run 'ca:install' again.\n".$msg, 1);
 			} else {
-				$this->error("CRMAInstall::handle exception: ".$e);
-				throw new Exception("CRMAInstall::handle Unable to install : ".$msg, 1);
+				$this->error("CAInstall::handle exception: ".$e);
+				throw new Exception("CAInstall::handle Unable to install : ".$msg, 1);
 			}
 		}
 	}

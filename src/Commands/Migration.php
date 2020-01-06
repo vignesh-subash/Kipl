@@ -13,14 +13,14 @@ class Migration extends Command
      *
      * @var string
      */
-    protected $signature = 'crma:migration {table} {--generate}';
+    protected $signature = 'ca:migration {table} {--generate}';
 
     /**
      * The command description.
      *
      * @var string
      */
-    protected $description = 'Genrate Migrations for CRMAdmin';
+    protected $description = 'Genrate Migrations for CRM Admin';
 
     /**
      * Generate a CRUD files inclusing Controller, Model and Routes

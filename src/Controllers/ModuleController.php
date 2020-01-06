@@ -319,7 +319,7 @@ class ModuleController extends Controller
 		$modules = CAHelper::getModuleNames([]);
 		$roles = Role::all();
 
-		$now = date("Y-m-d H:i:s");
+		$now = date("d-m-Y H:i:s");
 
 		foreach($roles as $role) {
 

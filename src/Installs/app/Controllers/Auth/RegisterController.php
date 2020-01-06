@@ -97,9 +97,9 @@ class RegisterController extends Controller
             'city' => "Chennai",
             'address' => "Kodambakkam, Chennai 600034",
             'about' => "About user / biography",
-            'date_birth' => date("d-m-Y"),
-            'date_hire' => date("d-m-Y"),
-            'date_left' => date("d-m-Y"),
+            'date_birth' => date("Y-m-d"),
+            'date_hire' => date("Y-m-d"),
+            'date_left' => date("Y-m-d"),
             'salary_cur' => 0,
         ]);
 

@@ -17,7 +17,7 @@ class Packaging extends Command
      *
      * @var string
      */
-    protected $signature = 'crma:packaging';
+    protected $signature = 'ca:packaging';
 
     /**
      * The command description.
