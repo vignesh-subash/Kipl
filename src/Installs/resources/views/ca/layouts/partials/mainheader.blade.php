@@ -8,13 +8,13 @@
 		<span class="logo-mini"><b>{{ CAConfigs::getByKey('sitename_short') }}</b></span>
 		<!-- logo for regular state and mobile devices -->
 		<span class="logo-lg"><b>{{ CAConfigs::getByKey('sitename_part1') }}</b>
-		 {{ LAConfigs::getByKey('sitename_part2') }}</span>
+		 {{ CAConfigs::getByKey('sitename_part2') }}</span>
 	</a>
 	@endif
 
 	<!-- Header Navbar -->
 	<nav class="navbar navbar-static-top" role="navigation">
-	@if(LAConfigs::getByKey('layout') == 'layout-top-nav')
+	@if(CAConfigs::getByKey('layout') == 'layout-top-nav')
 		<div class="container">
 			<div class="navbar-header">
 				<a href="{{ url(config('crmadmin.adminRoute')) }}" class="navbar-brand"><b>{{ CAConfigs::getByKey('sitename_part1') }}</b>{{ CAConfigs::getByKey('sitename_part2') }}</a>
@@ -32,6 +32,6 @@
 		</a>
 		@include('ca.layouts.partials.notifs')
 	@endif
-
+	
 	</nav>
 </header>

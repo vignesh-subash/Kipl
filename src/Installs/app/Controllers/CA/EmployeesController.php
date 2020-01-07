@@ -1,7 +1,10 @@
 <?php
 /**
- * Controller genrated using CRM Admin
- * Help: http://
+ * Controller generated using CrmAdmin
+ * Help: http://crmadmin.com
+ * CrmAdmin is open-sourced software licensed under the MIT license.
+ * Developed by: Kipl IT Solutions
+ * Developer Website: http://kipl.com
  */
 
 namespace App\Http\Controllers\CA;
@@ -16,7 +19,7 @@ use Datatables;
 use Collective\Html\FormFacade as Form;
 use Kipl\Crmadmin\Models\Module;
 use Kipl\Crmadmin\Models\ModuleFields;
-
+use Kipl\Crmadmin\Models\CAConfigs;
 use Kipl\Crmadmin\Helpers\CAHelper;
 
 use App\User;
@@ -28,21 +31,6 @@ use Log;
 class EmployeesController extends Controller
 {
 	public $show_action = true;
-	public $view_col = 'name';
-	public $listing_cols = ['id', 'name', 'designation', 'mobile', 'email', 'dept'];
-
-	public function __construct() {
-
-		// Field Access of Listing Columns
-		if(\Kipl\Crmadmin\Helpers\CAHelper::laravel_ver() == 5.5) {
-			$this->middleware(function ($request, $next) {
-				$this->listing_cols = ModuleFields::listingColumnAccessScan('Employees', $this->listing_cols);
-				return $next($request);
-			});
-		} else {
-			$this->listing_cols = ModuleFields::listingColumnAccessScan('Employees', $this->listing_cols);
-		}
-	}
 
 	/**
 	 * Display a listing of the Employees.
@@ -56,7 +44,7 @@ class EmployeesController extends Controller
 		if(Module::hasAccess($module->id)) {
 			return View('ca.employees.index', [
 				'show_actions' => $this->show_action,
-				'listing_cols' => $this->listing_cols,
+				'listing_cols' => Module::getListingColumns('Employees'),
 				'module' => $module
 			]);
 		} else {
@@ -114,8 +102,8 @@ class EmployeesController extends Controller
 			if(env('MAIL_USERNAME') != null && env('MAIL_USERNAME') != "null" && env('MAIL_USERNAME') != "") {
 				// Send mail to User his Password
 				Mail::send('emails.send_login_cred', ['user' => $user, 'password' => $password], function ($m) use ($user) {
-					$m->from('hello@kipl.com', 'CRM Admin');
-					$m->to($user->email, $user->name)->subject('LaraAdmin - Your Login Credentials');
+					$m->from('hello@crmadmin.com', 'CrmAdmin');
+					$m->to($user->email, $user->name)->subject('CrmAdmin - Your Login Credentials');
 				});
 			} else {
 				Log::info("User created: username: ".$user->email." Password: ".$password);
@@ -149,7 +137,7 @@ class EmployeesController extends Controller
 				return view('ca.employees.show', [
 					'user' => $user,
 					'module' => $module,
-					'view_col' => $this->view_col,
+					'view_col' => $module->view_col,
 					'no_header' => true,
 					'no_padding' => "no-padding"
 				])->with('employee', $employee);
@@ -185,7 +173,7 @@ class EmployeesController extends Controller
 
 				return view('ca.employees.edit', [
 					'module' => $module,
-					'view_col' => $this->view_col,
+					'view_col' => $module->view_col,
 					'user' => $user,
 				])->with('employee', $employee);
 			} else {
@@ -260,21 +248,24 @@ class EmployeesController extends Controller
 	 *
 	 * @return
 	 */
-	public function dtajax()
+	public function dtajax(Request $request)
 	{
-		$values = DB::table('employees')->select($this->listing_cols)->whereNull('deleted_at');
+		$module = Module::get('Employees');
+		$listing_cols = Module::getListingColumns('Employees');
+
+		$values = DB::table('employees')->select($listing_cols)->whereNull('deleted_at');
 		$out = Datatables::of($values)->make();
 		$data = $out->getData();
 
 		$fields_popup = ModuleFields::getModuleFields('Employees');
 
 		for($i=0; $i < count($data->data); $i++) {
-			for ($j=0; $j < count($this->listing_cols); $j++) {
-				$col = $this->listing_cols[$j];
+			for ($j=0; $j < count($listing_cols); $j++) {
+				$col = $listing_cols[$j];
 				if($fields_popup[$col] != null && starts_with($fields_popup[$col]->popup_vals, "@")) {
 					$data->data[$i][$j] = ModuleFields::getFieldValue($fields_popup[$col], $data->data[$i][$j]);
 				}
-				if($col == $this->view_col) {
+				if($col == $module->view_col) {
 					$data->data[$i][$j] = '<a href="'.url(config('crmadmin.adminRoute') . '/employees/'.$data->data[$i][0]).'">'.$data->data[$i][$j].'</a>';
 				}
 				// else if($col == "author") {
@@ -328,7 +319,7 @@ class EmployeesController extends Controller
 			// Send mail to User his new Password
 			Mail::send('emails.send_login_cred_change', ['user' => $user, 'password' => $request->password], function ($m) use ($user) {
 				$m->from(CAConfigs::getByKey('default_email'), CAConfigs::getByKey('sitename'));
-				$m->to($user->email, $user->name)->subject('CRMAdmin - Login Credentials chnaged');
+				$m->to($user->email, $user->name)->subject('CrmAdmin - Login Credentials changed');
 			});
 		} else {
 			Log::info("User change_password: username: ".$user->email." Password: ".$request->password);

@@ -1,7 +1,10 @@
 <?php
 /**
- * Controller genrated using CRM Admin
- * Help: http://
+ * Code generated using CrmAdmin
+ * Help: http://crmadmin.com
+ * CrmAdmin is open-sourced software licensed under the MIT license.
+ * Developed by: Kipl IT Solutions
+ * Developer Website: http://kipl.com
  */
 
 namespace Kipl\Crmadmin\Controllers;
@@ -18,22 +21,29 @@ use Kipl\Crmadmin\Models\ModuleFields;
 use Kipl\Crmadmin\Models\ModuleFieldTypes;
 use Kipl\Crmadmin\Helpers\CAHelper;
 
+/**
+ * Class MenuController
+ * @package Kipl\Crmadmin\Controllers
+ *
+ * Works after managing Menus and their hierarchy
+ */
 class MenuController extends Controller
 {
-
-    public function __construct() {
+    public function __construct()
+    {
         // for authentication (optional)
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of Menus
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
         $modules = Module::all();
+        // Send Menus with No Parent to Views
         $menuItems = Menu::where("parent", 0)->orderBy('hierarchy', 'asc')->get();
 
         return View('ca.menus.index', [
@@ -43,19 +53,9 @@ class MenuController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Store a newly created Menu in Database
      *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -91,33 +91,15 @@ class MenuController extends Controller
                 "status" => "success"
             ], 200);
         } else {
-            return redirect(config('crmadmin.adminRoute').'/ca_menus');
+            return redirect(config('crmadmin.adminRoute') . '/ca_menus');
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        // $ftypes = ModuleFieldTypes::getFTypes2();
-        // $module = Module::find($id);
-        // $module = Module::get($module->name);
-        // return view('ca.modules.show', [
-        //     'no_header' => true,
-        //     'no_padding' => "no-padding",
-        //     'ftypes' => $ftypes
-        // ])->with('module', $module);
     }
 
     /**
      * Update Custom Menu
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -133,13 +115,13 @@ class MenuController extends Controller
         $menu->icon = $icon;
         $menu->save();
 
-        return redirect(config('crmadmin.adminRoute').'/ca_menus');
+        return redirect(config('crmadmin.adminRoute') . '/ca_menus');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified Menu from database
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -147,26 +129,33 @@ class MenuController extends Controller
         Menu::find($id)->delete();
 
         // Redirecting to index() method for Listing
-        return redirect()->route(config('crmadmin.adminRoute').'.ca_menus.index');
+        return redirect()->route(config('crmadmin.adminRoute') . '.ca_menus.index');
     }
 
     /**
      * Update Menu Hierarchy
      *
-     * @return \Illuminate\Http\Response
+     * @return mixed
      */
     public function update_hierarchy()
     {
         $parents = Input::get('jsonData');
         $parent_id = 0;
 
-        for ($i=0; $i < count($parents); $i++) {
-            $this->apply_hierarchy($parents[$i], $i+1, $parent_id);
+        for($i = 0; $i < count($parents); $i++) {
+            $this->apply_hierarchy($parents[$i], $i + 1, $parent_id);
         }
 
         return $parents;
     }
 
+    /**
+     * Save Menu hierarchy Recursively
+     *
+     * @param $menuItem Menu Item Array
+     * @param $num Hierarchy number
+     * @param $parent_id Parent ID
+     */
     function apply_hierarchy($menuItem, $num, $parent_id)
     {
         // echo "apply_hierarchy: ".json_encode($menuItem)." - ".$num." - ".$parent_id."  <br><br>\n\n";
@@ -175,9 +164,10 @@ class MenuController extends Controller
         $menu->hierarchy = $num;
         $menu->save();
 
+        // apply hierarchy to children if exists
         if(isset($menuItem['children'])) {
-            for ($i=0; $i < count($menuItem['children']); $i++) {
-                $this->apply_hierarchy($menuItem['children'][$i], $i+1, $menuItem['id']);
+            for($i = 0; $i < count($menuItem['children']); $i++) {
+                $this->apply_hierarchy($menuItem['children'][$i], $i + 1, $menuItem['id']);
             }
         }
     }

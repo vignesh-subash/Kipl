@@ -1,7 +1,7 @@
 @extends("ca.layouts.app")
 
 @section("contentheader_title", "Organizations")
-@section("contentheader_description", "organizations listing")
+@section("contentheader_description", "Organizations listing")
 @section("section", "Organizations")
 @section("sub_section", "Listing")
 @section("htmlheader_title", "Organizations Listing")
@@ -39,7 +39,7 @@
 		</tr>
 		</thead>
 		<tbody>
-
+			
 		</tbody>
 		</table>
 	</div>
@@ -53,18 +53,18 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title" id="myModalLabel">Add Organization</h4>
 			</div>
-			{!! Form::open(['action' => 'CA\OrganizationsController@store', 'id' => 'organization-add-form']) !!}
+			{!! Form::open(['action' => 'LA\OrganizationsController@store', 'id' => 'organization-add-form']) !!}
 			<div class="modal-body">
 				<div class="box-body">
                     @ca_form($module)
-
+					
 					{{--
 					@ca_input($module, 'name')
 					@ca_input($module, 'email')
 					@ca_input($module, 'phone')
 					@ca_input($module, 'website')
 					@ca_input($module, 'assigned_to')
-					@ca_input($module, 'connect_since')
+					@ca_input($module, 'connected_since')
 					@ca_input($module, 'address')
 					@ca_input($module, 'city')
 					@ca_input($module, 'description')
@@ -107,7 +107,7 @@ $(function () {
 		@endif
 	});
 	$("#organization-add-form").validate({
-
+		
 	});
 });
 </script>

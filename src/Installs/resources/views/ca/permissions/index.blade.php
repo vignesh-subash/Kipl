@@ -1,7 +1,7 @@
 @extends("ca.layouts.app")
 
 @section("contentheader_title", "Permissions")
-@section("contentheader_description", "permissions listing")
+@section("contentheader_description", "Permissions listing")
 @section("section", "Permissions")
 @section("sub_section", "Listing")
 @section("htmlheader_title", "Permissions Listing")
@@ -39,7 +39,7 @@
 		</tr>
 		</thead>
 		<tbody>
-
+			
 		</tbody>
 		</table>
 	</div>
@@ -53,11 +53,11 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title" id="myModalLabel">Add Permission</h4>
 			</div>
-			{!! Form::open(['action' => 'CA\PermissionsController@store', 'id' => 'permission-add-form']) !!}
+			{!! Form::open(['action' => 'LA\PermissionsController@store', 'id' => 'permission-add-form']) !!}
 			<div class="modal-body">
 				<div class="box-body">
                     @ca_form($module)
-
+					
 					{{--
 					@ca_input($module, 'name')
 					@ca_input($module, 'display_name')
@@ -99,7 +99,7 @@ $(function () {
 		@endif
 	});
 	$("#permission-add-form").validate({
-
+		
 	});
 });
 </script>

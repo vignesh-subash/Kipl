@@ -2,7 +2,7 @@
 
 @section('htmlheader_title') Dashboard @endsection
 @section('contentheader_title') Dashboard @endsection
-@section('contentheader_description') Organisation Overview @endsection
+@section('contentheader_description') Organization Overview @endsection
 
 @section('main-content')
 <!-- Main content -->
@@ -480,8 +480,8 @@
 (function($) {
 	$('body').pgNotification({
 		style: 'circle',
-		title: 'CRM Admin',
-		message: "Welcome to CRM Admin...",
+		title: 'CrmAdmin',
+		message: "Welcome to CrmAdmin...",
 		position: "top-right",
 		timeout: 0,
 		type: "success",

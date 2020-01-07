@@ -4,15 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{{ CAConfigs::getByKey('site_description') }}">
-    <meta name="author" content="KIPL">
+    <meta name="author" content="Kipl IT Solutions">
 
     <meta property="og:title" content="{{ CAConfigs::getByKey('sitename') }}" />
     <meta property="og:type" content="website" />
     <meta property="og:description" content="{{ CAConfigs::getByKey('site_description') }}" />
 
-    <meta property="og:url" content="http:///" />
-    <meta property="og:sitename" content="crmAdmin" />
-	<meta property="og:image" content="http://demo.adminlte.acacha.org/img/LaraAdmin-600x600.jpg" />
+    <meta property="og:url" content="http://crmadmin.com/" />
+    <meta property="og:sitename" content="laraAdmin" />
+	<meta property="og:image" content="http://demo.adminlte.acacha.org/img/CrmAdmin-600x600.jpg" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@crmadmin" />
@@ -81,9 +81,17 @@
             <div class="col-lg-2">
                 <h5>Amazing Functionalities</h5>
                 <p>for Modern Admin Panels</p>
-
+                <img class="hidden-xs hidden-sm hidden-md" src="{{ asset('/la-assets/img/arrow1.png') }}">
             </div>
-
+            <div class="col-lg-8">
+                <img class="img-responsive" src="{{ asset('/la-assets/img/app-bg.png') }}" alt="">
+            </div>
+            <div class="col-lg-2">
+                <br>
+                <img class="hidden-xs hidden-sm hidden-md" src="{{ asset('/la-assets/img/arrow2.png') }}">
+                <h5>Completely Packaged...</h5>
+                <p>for Future expantion of Modules</p>
+            </div>
         </div>
     </div> <!--/ .container -->
 </div><!--/ #headerwrap -->
@@ -127,14 +135,14 @@
             </div>
 
             <div class="col-lg-7">
-				<h3 class="feature-title">What is CRM Admin ?</h3><br>
+				<h3 class="feature-title">What is CrmAdmin ?</h3><br>
 				<ol class="features">
 					<li><strong>CMS</strong> (Content Management System) &#8211; Manages Modules &amp; their Data</li>
 					<li>Backend <strong>Admin Panel</strong> &#8211; Data can be used in front end applications with ease.</li>
 					<li>A probable <strong>CRM</strong> System &#8211; Can be evolved into a CRM system like <a target="_blank" href="https://www.sugarcrm.com">SugarCRM</a></li>
 				</ol><br>
 
-				<h3 class="feature-title">Why LaraAdmin ?</h3><br>
+				<h3 class="feature-title">Why CrmAdmin ?</h3><br>
                 <ol class="features">
 					<li><strong>Philosophy:</strong> Inspired by SugarCRM &amp; based on Advanced <strong>Data Types</strong> like Image, HTML, File, Dropdown, TagInput which makes developers job easy. See more in <a target="_blank" href="http://crmadmin.com/features">features</a></li>
 					<li>Superior <strong>CRUD generation</strong> for Modules which generates Migration, Controller, Model and Views with single artisan command and integrates with Routes as as well.</li>
@@ -154,15 +162,15 @@
         <div class="col-lg-5">
             <h3>Contact Us</h3><br>
             <p>
-			KIPL<br/>
-				Web Development Company in Chennai,<br/>
-                Kodambakkam,<br/>
-
-                Chennai, India - 600034
+				Kipl IT Solutions,<br/>
+				Web Development Company in Pune,<br/>
+                B4, Patang Plaza Phase 5,<br/>
+                Opp. PICT College,<br/>
+                Katraj, Pune, India - 411046
             </p>
-			<div class="contact-link"><i class="fa fa-envelope-o"></i> <a href="mailto:hello@kipl.com">hello@kipl.com</a></div>
-			<div class="contact-link"><i class="fa fa-cube"></i> <a href="http://krishcoinfolabs.com">krishcoinfolabs.com.com</a></div>
-			<div class="contact-link"><i class="fa fa-building"></i> <a href="http://krishcoinfolabs.com">krishcoinfolabs.com</a></div>
+			<div class="contact-link"><i class="fa fa-envelope-o"></i> <a href="mailto:hello@crmadmin.com">hello@crmadmin.com</a></div>
+			<div class="contact-link"><i class="fa fa-cube"></i> <a href="http://crmadmin.com">crmadmin.com</a></div>
+			<div class="contact-link"><i class="fa fa-building"></i> <a href="http://kiplit.com">kiplit.com</a></div>
         </div>
 
         <div class="col-lg-7">
@@ -190,7 +198,7 @@
 <div id="c">
     <div class="container">
         <p>
-            <strong>Copyright &copy; 2020. Powered by <a href="https://krishcoinfolabs.com"><b>krishcoinfolabs</b></a>
+            <strong>Copyright &copy; 2016. Powered by <a href="https://kiplit.com"><b>Kipl IT Solutions</b></a>
         </p>
     </div>
 </div>

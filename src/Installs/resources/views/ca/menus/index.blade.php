@@ -30,12 +30,12 @@ use Kipl\Crmadmin\Models\Module;
 						<div class="tab-pane active" id="tab-modules">
 							<ul>
 							@foreach ($modules as $module)
-								<li><i class="fa {{ $module->fa_icon }}"></i> {{ $module->name }} <a module_id="{{ $module->id }}" class="addModuleMenu pull-right"><i class="fa fa-plus"></i></a></li>
+								<li><i class="fa {{ $module->fa_icon }}"></i> {{ $module->label }} <a module_id="{{ $module->id }}" class="addModuleMenu pull-right"><i class="fa fa-plus"></i></a></li>
 							@endforeach
 							</ul>
 						</div>
 						<div class="tab-pane" id="tab-custom-link">
-
+							
 							{!! Form::open(['action' => '\Kipl\Crmadmin\Controllers\MenuController@store', 'id' => 'menu-custom-form']) !!}
 								<input type="hidden" name="type" value="custom">
 								<div class="form-group">
@@ -63,7 +63,7 @@ use Kipl\Crmadmin\Models\Module;
 				<div class="dd" id="menu-nestable">
 					<ol class="dd-list">
 						@foreach ($menus as $menu)
-							<?php echo CAHelper::print_menu_editor($menu); ?>
+							<?php echo LAHelper::print_menu_editor($menu); ?>
 						@endforeach
 					</ol>
 				</div>
@@ -138,12 +138,12 @@ $(function () {
 		});
 	});
 	$("#menu-custom-form").validate({
-
+		
 	});
 
 	$("#menu-nestable .editMenuBtn").on("click", function() {
 		var info = JSON.parse($(this).attr("info"));
-
+		
 		var url = $("#menu-edit-form").attr("action");
 		index = url.lastIndexOf("/");
 		url2 = url.substring(0, index+1)+info.id;
@@ -156,9 +156,9 @@ $(function () {
 	});
 
 	$("#menu-edit-form").validate({
-
+		
 	});
-
+	
 	$("#tab-modules .addModuleMenu").on("click", function() {
 		var module_id = $(this).attr("module_id");
 		$.ajax({

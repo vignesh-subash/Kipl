@@ -28,7 +28,7 @@
 		<div class="col-md-3">
 			<div class="dats1"><div class="label2">Admin</div></div>
 			<div class="dats1"><i class="fa fa-envelope-o"></i> superadmin@gmail.com</div>
-			<div class="dats1"><i class="fa fa-map-marker"></i> Chennai, India</div>
+			<div class="dats1"><i class="fa fa-map-marker"></i> Pune, India</div>
 		</div>
 		<div class="col-md-4">
 			<!--
@@ -84,7 +84,7 @@
 			@ca_access("Organizations", "edit")
 				<a href="{{ url(config('crmadmin.adminRoute') . '/organizations/'.$organization->id.'/edit') }}" class="btn btn-xs btn-edit btn-default"><i class="fa fa-pencil"></i></a><br>
 			@endca_access
-
+			
 			@ca_access("Organizations", "delete")
 				{{ Form::open(['route' => [config('crmadmin.adminRoute') . '.organizations.destroy', $organization->id], 'method' => 'delete', 'style'=>'display:inline']) }}
 					<button class="btn btn-default btn-delete btn-xs" type="submit"><i class="fa fa-times"></i></button>
@@ -112,7 +112,7 @@
 						@ca_display($module, 'phone')
 						@ca_display($module, 'website')
 						@ca_display($module, 'assigned_to')
-						@ca_display($module, 'connect_since')
+						@ca_display($module, 'connected_since')
 						@ca_display($module, 'address')
 						@ca_display($module, 'city')
 						@ca_display($module, 'description')
@@ -216,7 +216,7 @@
 			</ul>
 			<!--<div class="text-center p30"><i class="fa fa-list-alt" style="font-size: 100px;"></i> <br> No posts to show</div>-->
 		</div>
-
+		
 	</div>
 	</div>
 	</div>

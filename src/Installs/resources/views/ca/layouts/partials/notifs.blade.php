@@ -122,7 +122,7 @@
 								</p>
 							</li>
 							<!-- Menu Body -->
-							@role(('SUPER_ADMIN'))
+							@role("SUPER_ADMIN")
 							<li class="user-body">
 								<div class="col-xs-6 text-center mb10">
 									<a href="{{ url(config('crmadmin.adminRoute') . '/lacodeeditor') }}"><i class="fa fa-code"></i> <span>Editor</span></a>
@@ -157,7 +157,7 @@
 				<!-- Control Sidebar Toggle Button -->
 				<li>
 					<a href="#" data-toggle="control-sidebar"><i class="fa fa-comments-o"></i> <span class="label label-warning">10</span></a>
-
+					
 				</li>
 				@endif
 			</ul>

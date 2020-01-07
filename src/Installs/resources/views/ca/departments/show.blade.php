@@ -28,7 +28,7 @@
 		<div class="col-md-3">
 			<div class="dats1"><div class="label2">Admin</div></div>
 			<div class="dats1"><i class="fa fa-envelope-o"></i> superadmin@gmail.com</div>
-			<div class="dats1"><i class="fa fa-map-marker"></i> Chennai, India</div>
+			<div class="dats1"><i class="fa fa-map-marker"></i> Pune, India</div>
 		</div>
 		<div class="col-md-4">
 			<!--
@@ -84,7 +84,7 @@
 			@ca_access("Departments", "edit")
 				<a href="{{ url(config('crmadmin.adminRoute') . '/departments/'.$department->id.'/edit') }}" class="btn btn-xs btn-edit btn-default"><i class="fa fa-pencil"></i></a><br>
 			@endca_access
-
+			
 			@ca_access("Departments", "delete")
 				{{ Form::open(['route' => [config('crmadmin.adminRoute') . '.departments.destroy', $department->id], 'method' => 'delete', 'style'=>'display:inline']) }}
 					<button class="btn btn-default btn-delete btn-xs" type="submit"><i class="fa fa-times"></i></button>
@@ -208,7 +208,7 @@
 			</ul>
 			<!--<div class="text-center p30"><i class="fa fa-list-alt" style="font-size: 100px;"></i> <br> No posts to show</div>-->
 		</div>
-
+		
 	</div>
 	</div>
 	</div>

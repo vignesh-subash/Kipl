@@ -12,13 +12,13 @@
 				?>
 				@ca_access($temp_module_obj->id)
 					@if(isset($module->id) && $module->name == $menu->name)
-						<?php echo CAHelper::print_menu_topnav($menu ,true); ?>
+						<?php echo LAHelper::print_menu_topnav($menu ,true); ?>
 					@else
-						<?php echo CAHelper::print_menu_topnav($menu); ?>
+						<?php echo LAHelper::print_menu_topnav($menu); ?>
 					@endif
 				@endca_access
 			@else
-				<?php echo CAHelper::print_menu_topnav($menu); ?>
+				<?php echo LAHelper::print_menu_topnav($menu); ?>
 			@endif
 		@endforeach
 	</ul>

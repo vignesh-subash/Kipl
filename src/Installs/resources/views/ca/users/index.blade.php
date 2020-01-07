@@ -1,7 +1,7 @@
 @extends("ca.layouts.app")
 
 @section("contentheader_title", "Users")
-@section("contentheader_description", "users listing")
+@section("contentheader_description", "Users listing")
 @section("section", "Users")
 @section("sub_section", "Listing")
 @section("htmlheader_title", "Users Listing")
@@ -37,7 +37,7 @@
 		</tr>
 		</thead>
 		<tbody>
-
+			
 		</tbody>
 		</table>
 	</div>
@@ -67,7 +67,7 @@ $(function () {
 		@endif
 	});
 	$("#user-add-form").validate({
-
+		
 	});
 });
 </script>

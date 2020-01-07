@@ -1,10 +1,17 @@
 <?php
+/**
+ * Code generated using CrmAdmin
+ * Help: http://crmadmin.com
+ * CrmAdmin is open-sourced software licensed under the MIT license.
+ * Developed by: KiplIT Solutions
+ * Developer Website: http://dwijitsolutions.com
+ */
 
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class LaraAdminModuleTest extends TestCase
+class CrmAdminModuleTest extends TestCase
 {
 	use DatabaseMigrations;
 
@@ -127,7 +134,7 @@ class LaraAdminModuleTest extends TestCase
 			->select('5', 'field_type')
 			->uncheck('unique')
 			->type('', 'defaultvalue')
-			->check('required')
+			->uncheck('required')
 			->press('Submit');
 		$this->see("StudentsController")
 			->type('Weight', 'label')

@@ -1,7 +1,10 @@
 <?php
 /**
- * Command for CRM Admin Package Development
- * Help: http://
+ * Code generated using CrmAdmin
+ * Help: http://crmadmin.com
+ * CrmAdmin is open-sourced software licensed under the MIT license.
+ * Developed by: Kipl IT Solutions
+ * Developer Website: http://kiplitsolutions.com
  */
 
 namespace Kipl\Crmadmin\Commands;
@@ -10,29 +13,32 @@ use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Kipl\Crmadmin\Helpers\CAHelper;
 
+/**
+ * Class Packaging
+ * @package Kipl\Crmadmin\Commands
+ *
+ * Command to put latest development and changes of project into CrmAdmin package.
+ * [For CrmAdmin Developer's Only]
+ */
 class Packaging extends Command
 {
-    /**
-     * The command signature.
-     *
-     * @var string
-     */
-    protected $signature = 'ca:packaging';
-
-    /**
-     * The command description.
-     *
-     * @var string
-     */
-    protected $description = '[Developer Only] - Copy CRMAdmin-Dev files to package: "kipl/crmadmin"';
-
-    protected $from;
-    protected $to;
-
+    // The command signature.
     var $modelsInstalled = ["User", "Role", "Permission", "Employee", "Department", "Upload", "Organization", "Backup"];
 
+    // The command description.
+    protected $signature = 'ca:packaging';
+
+    // Copy From Folder - Package Install Files
+    protected $description = '[Developer Only] - Copy CrmAdmin-Dev files to package: "kipl/crmadmin"';
+
+    // Copy to Folder - Project Folder
+    protected $from;
+
+    // Model Names to be handled during Packaging
+    protected $to;
+
     /**
-     * Generate a CRUD files inclusing Controller, Model and Routes
+     * Copy Project changes into CrmAdmin package.
      *
      * @return mixed
      */
@@ -43,68 +49,75 @@ class Packaging extends Command
         $from = base_path();
         $to = base_path('vendor/kipl/crmadmin/src/Installs');
 
-        $this->info('from: '.$from." to: ".$to);
+        $this->info('from: ' . $from . " to: " . $to);
 
         // Controllers
         $this->line('Exporting Controllers...');
-        $this->replaceFolder($from."/app/Http/Controllers/Auth", $to."/app/Controllers/Auth");
-        $this->replaceFolder($from."/app/Http/Controllers/CA", $to."/app/Controllers/CA");
-        $this->copyFile($from."/app/Http/Controllers/Controller.php", $to."/app/Controllers/Controller.php");
-        $this->copyFile($from."/app/Http/Controllers/HomeController.php", $to."/app/Controllers/HomeController.php");
+        $this->replaceFolder($from . "/app/Http/Controllers/Auth", $to . "/app/Controllers/Auth");
+        $this->replaceFolder($from . "/app/Http/Controllers/CA", $to . "/app/Controllers/CA");
+        $this->copyFile($from . "/app/Http/Controllers/Controller.php", $to . "/app/Controllers/Controller.php");
+        $this->copyFile($from . "/app/Http/Controllers/HomeController.php", $to . "/app/Controllers/HomeController.php");
 
         // Models
         $this->line('Exporting Models...');
 
-        foreach ($this->modelsInstalled as $model) {
+        foreach($this->modelsInstalled as $model) {
             if($model == "User" || $model == "Role" || $model == "Permission") {
-				$this->copyFile($from."/app/".$model.".php", $to."/app/Models/".$model.".php");
-			} else {
-				$this->copyFile($from."/app/Models/".$model.".php", $to."/app/Models/".$model.".php");
-			}
+                $this->copyFile($from . "/app/" . $model . ".php", $to . "/app/Models/" . $model . ".php");
+            } else {
+                $this->copyFile($from . "/app/Models/" . $model . ".php", $to . "/app/Models/" . $model . ".php");
+            }
         }
 
         // Routes
         $this->line('Exporting Routes...');
-        if(CAHelper::laravel_ver() == 5.5) {
-			// $this->copyFile($from."/routes/web.php", $to."/app/routes.php"); // Not needed anymore
-			$this->copyFile($from."/routes/admin_routes.php", $to."/app/admin_routes.php");
-		} else {
-			// $this->copyFile($from."/app/Http/routes.php", $to."/app/routes.php"); // Not needed anymore
-			$this->copyFile($from."/app/Http/admin_routes.php", $to."/app/admin_routes.php");
-		}
+        if(CAHelper::laravel_ver() == 5.5 || CAHelper::laravel_ver() == 5.6) {
+            // $this->copyFile($from."/routes/web.php", $to."/app/routes.php"); // Not needed anymore
+            $this->copyFile($from . "/routes/admin_routes.php", $to . "/app/admin_routes.php");
+        } else {
+            // $this->copyFile($from."/app/Http/routes.php", $to."/app/routes.php"); // Not needed anymore
+            $this->copyFile($from . "/app/Http/admin_routes.php", $to . "/app/admin_routes.php");
+        }
 
-		// tests
-		$this->line('Exporting tests...');
-		$this->replaceFolder($from."/tests", $to."/tests");
+        // tests
+        $this->line('Exporting tests...');
+        $this->replaceFolder($from . "/tests", $to . "/tests");
 
         // Config
         $this->line('Exporting Config...');
-        $this->copyFile($from."/config/crmadmin.php", $to."/config/crmadmin.php");
+        $this->copyFile($from . "/config/crmadmin.php", $to . "/config/crmadmin.php");
 
         // la-assets
         $this->line('Exporting CrmAdmin Assets...');
-        $this->replaceFolder($from."/public/la-assets", $to."/la-assets");
+        $this->replaceFolder($from . "/public/ca-assets", $to . "/ca-assets");
         // Use "git config core.fileMode false" for ignoring file permissions
 
         // migrations
         $this->line('Exporting migrations...');
-        $this->replaceFolder($from."/database/migrations", $to."/migrations");
+        $this->replaceFolder($from . "/database/migrations", $to . "/migrations");
 
-		// seeds
+        // seeds
         $this->line('Exporting seeds...');
-        $this->copyFile($from."/database/seeds/DatabaseSeeder.php", $to."/seeds/DatabaseSeeder.php");
+        $this->copyFile($from . "/database/seeds/DatabaseSeeder.php", $to . "/seeds/DatabaseSeeder.php");
 
         // resources
         $this->line('Exporting resources: assets + views...');
-        $this->replaceFolder($from."/resources/assets", $to."/resources/assets");
-        $this->replaceFolder($from."/resources/views", $to."/resources/views");
+        $this->replaceFolder($from . "/resources/assets", $to . "/resources/assets");
+        $this->replaceFolder($from . "/resources/views", $to . "/resources/views");
 
         // Utilities
         $this->line('Exporting Utilities...');
         // $this->copyFile($from."/gulpfile.js", $to."/gulpfile.js"); // Temporarily Not used.
     }
 
-    private function replaceFolder($from, $to) {
+    /**
+     * Replace Folder contents by deleting content of to folder first
+     *
+     * @param $from from folder
+     * @param $to to folder
+     */
+    private function replaceFolder($from, $to)
+    {
         $this->info("replaceFolder: ($from, $to)");
         if(file_exists($to)) {
             CAHelper::recurse_delete($to);
@@ -112,11 +125,18 @@ class Packaging extends Command
         CAHelper::recurse_copy($from, $to);
     }
 
-    private function copyFile($from, $to) {
+    /**
+     * Copy file contents. If file not exists create it.
+     *
+     * @param $from from file
+     * @param $to to file
+     */
+    private function copyFile($from, $to)
+    {
         $this->info("copyFile: ($from, $to)");
         //CAHelper::recurse_copy($from, $to);
         if(!file_exists(dirname($to))) {
-            $this->info("mkdir: (".dirname($to).")");
+            $this->info("mkdir: (" . dirname($to) . ")");
             mkdir(dirname($to));
         }
         copy($from, $to);

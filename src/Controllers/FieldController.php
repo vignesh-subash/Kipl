@@ -1,7 +1,10 @@
 <?php
 /**
- * Controller genrated using LaraAdmin
- * Help: http://
+ * Code generated using LaraAdmin
+ * Help: http://crmadmin.com
+ * LaraAdmin is open-sourced software licensed under the MIT license.
+ * Developed by: Kipl IT Solutions
+ * Developer Website: http://kipl.com
  */
 
 namespace Kipl\Crmadmin\Controllers;
@@ -17,154 +20,142 @@ use Kipl\Crmadmin\Models\ModuleFields;
 use Kipl\Crmadmin\Models\ModuleFieldTypes;
 use Kipl\Crmadmin\Helpers\CAHelper;
 
+/**
+ * Class FieldController
+ * @package Kipl\Crmadmin\Controllers
+ *
+ * Controller looks after
+ */
 class FieldController extends Controller
 {
+    /**
+     * Store a newly created Module Field via "Module Manager"
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request)
+    {
+        $module = Module::find($request->module_id);
+        $module_id = $request->module_id;
 
-	public function __construct() {
-		// for authentication (optional)
-		// $this->middleware('auth');
-	}
+        $field_id = ModuleFields::createField($request);
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function index()
-	{
+        // Give Default Full Access to Super Admin
+        $role = \App\Role::where("name", "SUPER_ADMIN")->first();
+        Module::setDefaultFieldRoleAccess($field_id, $role->id, "full");
 
-	}
+        return redirect()->route(config('crmadmin.adminRoute') . '.modules.show', [$module_id]);
+    }
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function create()
-	{
-		//
-	}
+    /**
+     * Show the form for editing of Module Field via "Module Manager"
+     *
+     * @param $id Field's ID to be Edited
+     * @return $this
+     */
+    public function edit($id)
+    {
+        $field = ModuleFields::find($id);
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @return \Illuminate\Http\Response
-	 */
-	public function store(Request $request)
-	{
-		$module = Module::find($request->module_id);
-		$module_id = $request->module_id;
+        $module = Module::find($field->module);
+        $ftypes = ModuleFieldTypes::getFTypes2();
 
-		$field_id = ModuleFields::createField($request);
+        $tables = CAHelper::getDBTables([]);
 
-		// Give Default Full Access to Super Admin
-		$role = \App\Role::where("name", "SUPER_ADMIN")->first();
-		Module::setDefaultFieldRoleAccess($field_id, $role->id, "full");
+        return view('ca.modules.field_edit', [
+            'module' => $module,
+            'ftypes' => $ftypes,
+            'tables' => $tables
+        ])->with('field', $field);
+    }
 
-		return redirect()->route(config('crmadmin.adminRoute') . '.modules.show', [$module_id]);
-	}
+    /**
+     * Update the specified Module Field via "Module Manager"
+     *
+     * @param Request $request
+     * @param $id Field's ID to be Updated
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, $id)
+    {
+        $module_id = $request->module_id;
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function show($id)
-	{
-		// $ftypes = ModuleFieldTypes::getFTypes2();
-		// $module = Module::find($id);
-		// $module = Module::get($module->name);
-		// return view('ca.modules.show', [
-		//     'no_header' => true,
-		//     'no_padding' => "no-padding",
-		//     'ftypes' => $ftypes
-		// ])->with('module', $module);
-	}
+        ModuleFields::updateField($id, $request);
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function edit($id)
-	{
-		$field = ModuleFields::find($id);
+        return redirect()->route(config('crmadmin.adminRoute') . '.modules.show', [$module_id]);
+    }
 
-		$module = Module::find($field->module);
-		$ftypes = ModuleFieldTypes::getFTypes2();
+    /**
+     * Remove the specified Module Field from Database Context + Table
+     *
+     * @param $id Field's ID to be Destroyed
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        // Get Context
+        $field = ModuleFields::find($id);
+        $module = Module::find($field->module);
 
-		$tables = CAHelper::getDBTables([]);
+        // Delete from Table module_field
+        Schema::table($module->name_db, function ($table) use ($field) {
+            $table->dropForeign([$field->colname]);	// Issue #239
+            $table->dropColumn($field->colname);
+        });
 
-		return view('ca.modules.field_edit', [
-			'module' => $module,
-			'ftypes' => $ftypes,
-			'tables' => $tables
-		])->with('field', $field);
-	}
+        // Delete Context
+        $field->delete();
+        return redirect()->route(config('crmadmin.adminRoute') . '.modules.show', [$module->id]);
+    }
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function update(Request $request, $id)
-	{
-		$module_id = $request->module_id;
+    /**
+     * Check unique values for particular field
+     *
+     * @param Request $request
+     * @param $field_id Field ID
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function check_unique_val(Request $request, $field_id)
+    {
+        $valExists = false;
 
-		ModuleFields::updateField($id, $request);
+        // Get Field
+        $field = ModuleFields::find($field_id);
+        // Get Module
+        $module = Module::find($field->module);
 
-		return redirect()->route(config('crmadmin.adminRoute') . '.modules.show', [$module_id]);
-	}
+        // echo $module->name_db." ".$field->colname." ".$request->field_value;
+        $rowCount = DB::table($module->name_db)->where($field->colname, $request->field_value)->where("id", "!=", $request->row_id)->whereNull('deleted_at')->count();
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function destroy($id)
-	{
-		// Get Context
-		$field = ModuleFields::find($id);
-		$module = Module::find($field->module);
+        if($rowCount > 0) {
+            $valExists = true;
+        }
 
-		// Delete from Table module_field
-		Schema::table($module->name_db, function ($table) use ($field) {
-			$table->dropColumn($field->colname);
-		});
+        return response()->json(['exists' => $valExists]);
+    }
 
-		// Delete Context
-		$field->delete();
-		return redirect()->route(config('crmadmin.adminRoute') . '.modules.show', [$module->id]);
-	}
+    /**
+     * Save column visibility in listing/index view
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function module_field_listing_show_ajax(Request $request)
+    {
+        if($request->state == "true") {
+            $state = 1;
+        } else {
+            $state = 0;
+        }
+        $module_field = ModuleFields::find($request->listid);
+        if(isset($module_field->id)) {
+            $module_field->listing_col = $state;
+            $module_field->save();
 
-	/**
-	 * Check unique values for perticular field
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function check_unique_val(Request $request, $field_id)
-	{
-		$valExists = false;
-
-		// Get Field
-		$field = ModuleFields::find($field_id);
-		// Get Module
-		$module = Module::find($field->module);
-
-		// echo $module->name_db." ".$field->colname." ".$request->field_value;
-		$rowCount = DB::table($module->name_db)->where($field->colname, $request->field_value)->where("id", "!=", $request->row_id)->whereNull('deleted_at')->count();
-
-		if($rowCount > 0) {
-			$valExists = true;
-		}
-
-		return response()->json(['exists' => $valExists]);
-	}
+            return response()->json(['status' => 'success', 'message' => "Module field listing visibility saved to " . $state]);
+        } else {
+            return response()->json(['status' => 'failed', 'message' => "Module field not found"]);
+        }
+    }
 }

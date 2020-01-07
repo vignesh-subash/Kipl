@@ -39,7 +39,7 @@
 		</tr>
 		</thead>
 		<tbody>
-
+			
 		</tbody>
 		</table>
 	</div>
@@ -53,7 +53,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title" id="myModalLabel">Add Role</h4>
 			</div>
-			{!! Form::open(['action' => 'CA\RolesController@store', 'id' => 'role-add-form']) !!}
+			{!! Form::open(['action' => 'LA\RolesController@store', 'id' => 'role-add-form']) !!}
 			<div class="modal-body">
 				<div class="box-body">
                     @ca_input($module, 'name', null, null, "form-control text-uppercase", ["placeholder" => "Role Name in CAPITAL LETTERS with '_' to JOIN e.g. 'SUPER_ADMIN'"])
@@ -97,7 +97,7 @@ $(function () {
 		@endif
 	});
 	$("#role-add-form").validate({
-
+		
 	});
 });
 </script>

@@ -1,4 +1,11 @@
 <?php
+/**
+ * Code generated using CrmAdmin
+ * Help: http://crmadmin.com
+ * CrmAdmin is open-sourced software licensed under the MIT license.
+ * Developed by: Kipl IT Solutions
+ * Developer Website: http://kipl.com
+ */
 
 namespace Kipl\Crmadmin;
 
@@ -9,6 +16,13 @@ use Illuminate\Support\ServiceProvider;
 
 use Kipl\Crmadmin\Helpers\CAHelper;
 
+/**
+ * Class CAProvider
+ * @package Kipl\Crmadmin
+ *
+ * This is CrmAdmin Service Provider which looks after managing aliases, other required providers, blade directives
+ * and Commands.
+ */
 class CAProvider extends ServiceProvider
 {
     /**
@@ -28,47 +42,48 @@ class CAProvider extends ServiceProvider
         ]);
         */
         //echo "Crmadmin Migrations started...";
-        // Artisan::call('migrate', ['--path' => "vendor/kipl/crmadmin/src/Migrations/"]);
+        // Artisan::call('migrate', ['--path' => "vendor/dwij/crmadmin/src/Migrations/"]);
         //echo "Migrations completed !!!.";
         // Execute by php artisan vendor:publish --provider="Kipl\Crmadmin\CAProvider"
 
-		/*
+        /*
         |--------------------------------------------------------------------------
-        | Blade Directives for Entrust not working in Laravel 5.3
+        | Blade Directives for Entrust not working in Laravel 5.5
         |--------------------------------------------------------------------------
         */
-		if(CAHelper::laravel_ver() == 5.5) {
+        if(CAHelper::laravel_ver() == 5.5 || CAHelper::laravel_ver() == 5.6) {
 
-			// Call to Entrust::hasRole
-			Blade::directive('role', function($expression) {
-				return "<?php if (\\Entrust::hasRole({$expression})) : ?>";
-			});
+            // Call to Entrust::hasRole
+            Blade::directive('role', function ($expression) {
+                return "<?php if (\\Entrust::hasRole({$expression})) : ?>";
+            });
 
-			// Call to Entrust::can
-			Blade::directive('permission', function($expression) {
-				return "<?php if (\\Entrust::can({$expression})) : ?>";
-			});
+            // Call to Entrust::can
+            Blade::directive('permission', function ($expression) {
+                return "<?php if (\\Entrust::can({$expression})) : ?>";
+            });
 
-			// Call to Entrust::ability
-			Blade::directive('ability', function($expression) {
-				return "<?php if (\\Entrust::ability({$expression})) : ?>";
-			});
-		}
+            // Call to Entrust::ability
+            Blade::directive('ability', function ($expression) {
+                return "<?php if (\\Entrust::ability({$expression})) : ?>";
+            });
+        }
     }
 
     /**
-     * Register the application services.
+     * Register the application services including routes, Required Providers, Alias, Controllers, Blade Directives
+     * and Commands.
      *
      * @return void
      */
     public function register()
     {
-        include __DIR__.'/routes.php';
+        include __DIR__ . '/routes.php';
 
-		// For CAEditor
-		if(file_exists(__DIR__.'/../../laeditor')) {
-			include __DIR__.'/../../laeditor/src/routes.php';
-		}
+        // For LAEditor
+        if(file_exists(__DIR__ . '/../../laeditor')) {
+            include __DIR__ . '/../../laeditor/src/routes.php';
+        }
 
         /*
         |--------------------------------------------------------------------------
@@ -102,23 +117,23 @@ class CAProvider extends ServiceProvider
         // For Gravatar User Profile Pics
         $loader->alias('Gravatar', \Creativeorange\Gravatar\Facades\Gravatar::class);
 
-        // For LaraAdmin Code Generation
+        // For CrmAdmin Code Generation
         $loader->alias('CodeGenerator', \Kipl\Crmadmin\CodeGenerator::class);
 
-        // For LaraAdmin Form Helper
+        // For CrmAdmin Form Helper
         $loader->alias('CAFormMaker', \Kipl\Crmadmin\CAFormMaker::class);
 
-        // For LaraAdmin Helper
+        // For CrmAdmin Helper
         $loader->alias('CAHelper', \Kipl\Crmadmin\Helpers\CAHelper::class);
 
-        // LaraAdmin Module Model
+        // CrmAdmin Module Model
         $loader->alias('Module', \Kipl\Crmadmin\Models\Module::class);
 
-		    // For LaraAdmin Configuration Model
-		    $loader->alias('CAConfigs', \Kipl\Crmadmin\Models\CAConfigs::class);
+        // For CrmAdmin Configuration Model
+        $loader->alias('CAConfigs', \Kipl\Crmadmin\Models\CAConfigs::class);
 
         // For Entrust
-		    $loader->alias('Entrust', \Zizaco\Entrust\EntrustFacade::class);
+        $loader->alias('Entrust', \Zizaco\Entrust\EntrustFacade::class);
         $loader->alias('role', \Zizaco\Entrust\Middleware\EntrustRole::class);
         $loader->alias('permission', \Zizaco\Entrust\Middleware\EntrustPermission::class);
         $loader->alias('ability', \Zizaco\Entrust\Middleware\EntrustAbility::class);
@@ -129,64 +144,64 @@ class CAProvider extends ServiceProvider
         |--------------------------------------------------------------------------
         */
 
-        $this->app->make('\Kipl\Crmadmin\Controllers\ModuleController');
-        $this->app->make('\Kipl\Crmadmin\Controllers\FieldController');
-        $this->app->make('\Kipl\Crmadmin\Controllers\MenuController');
+        $this->app->make('Kipl\Crmadmin\Controllers\ModuleController');
+        $this->app->make('Kipl\Crmadmin\Controllers\FieldController');
+        $this->app->make('Kipl\Crmadmin\Controllers\MenuController');
 
-    		// For CAEditor
-    		if(file_exists(__DIR__.'/../../laeditor')) {
-    			$this->app->make('Kipl\Laeditor\Controllers\CodeEditorController');
-    		}
+        // For LAEditor
+        if(file_exists(__DIR__ . '/../../laeditor')) {
+            $this->app->make('Kipl\Laeditor\Controllers\CodeEditorController');
+        }
 
-    		/*
+        /*
         |--------------------------------------------------------------------------
         | Blade Directives
         |--------------------------------------------------------------------------
         */
 
-        // CAForm Input Maker
-        Blade::directive('ca_input', function($expression) {
-  			if(CAHelper::laravel_ver() == 5.5) {
-  				$expression = "(".$expression.")";
-  			}
-        return "<?php echo CAFormMaker::input$expression; ?>";
+        // LAForm Input Maker
+        Blade::directive('ca_input', function ($expression) {
+            if(CAHelper::laravel_ver() == 5.5 || CAHelper::laravel_ver() == 5.6) {
+                $expression = "(" . $expression . ")";
+            }
+            return "<?php echo CAFormMaker::input$expression; ?>";
         });
 
-        // CAForm Form Maker
-        Blade::directive('ca_form', function($expression) {
-  			if(CAHelper::laravel_ver() == 5.5) {
-  				$expression = "(".$expression.")";
-  			}
+        // LAForm Form Maker
+        Blade::directive('ca_form', function ($expression) {
+            if(CAHelper::laravel_ver() == 5.5 || CAHelper::laravel_ver() == 5.6) {
+                $expression = "(" . $expression . ")";
+            }
             return "<?php echo CAFormMaker::form$expression; ?>";
         });
 
-        // CAForm Maker - Display Values
-        Blade::directive('ca_display', function($expression) {
-			  if(CAHelper::laravel_ver() == 5.5) {
-				  $expression = "(".$expression.")";
-			  }
+        // LAForm Maker - Display Values
+        Blade::directive('ca_display', function ($expression) {
+            if(CAHelper::laravel_ver() == 5.5 || CAHelper::laravel_ver() == 5.6) {
+                $expression = "(" . $expression . ")";
+            }
             return "<?php echo CAFormMaker::display$expression; ?>";
         });
 
-        // CAForm Maker - Check Whether User has Module Access
-        Blade::directive('ca_access', function($expression) {
-  			if(CAHelper::laravel_ver() == 5.5) {
-  				$expression = "(".$expression.")";
-  			}
+        // LAForm Maker - Check Whether User has Module Access
+        Blade::directive('ca_access', function ($expression) {
+            if(CAHelper::laravel_ver() == 5.5 || CAHelper::laravel_ver() == 5.6) {
+                $expression = "(" . $expression . ")";
+            }
             return "<?php if(CAFormMaker::ca_access$expression) { ?>";
         });
-        Blade::directive('endca_access', function($expression) {
+        Blade::directive('endca_access', function ($expression) {
             return "<?php } ?>";
         });
 
-        // CAForm Maker - Check Whether User has Module Field Access
-        Blade::directive('ca_field_access', function($expression) {
-  			if(CAHelper::laravel_ver() == 5.5) {
-  				$expression = "(".$expression.")";
-  			}
+        // LAForm Maker - Check Whether User has Module Field Access
+        Blade::directive('ca_field_access', function ($expression) {
+            if(CAHelper::laravel_ver() == 5.5 || CAHelper::laravel_ver() == 5.6) {
+                $expression = "(" . $expression . ")";
+            }
             return "<?php if(CAFormMaker::ca_field_access$expression) { ?>";
         });
-        Blade::directive('endca_field_access', function($expression) {
+        Blade::directive('endca_field_access', function ($expression) {
             return "<?php } ?>";
         });
 
@@ -196,18 +211,18 @@ class CAProvider extends ServiceProvider
         |--------------------------------------------------------------------------
         */
 
-		      $commands = [
+        $commands = [
             \Kipl\Crmadmin\Commands\Migration::class,
             \Kipl\Crmadmin\Commands\Crud::class,
             \Kipl\Crmadmin\Commands\Packaging::class,
             \Kipl\Crmadmin\Commands\CAInstall::class
         ];
 
-    		// For CAEditor
-    		if(file_exists(__DIR__.'/../../caeditor')) {
-    			$commands[] = \Kipl\Caeditor\Commands\CAEditor::class;
-    		}
-
-            $this->commands($commands);
+        // For LAEditor
+        if(file_exists(__DIR__ . '/../../laeditor')) {
+            $commands[] = \Kipl\Laeditor\Commands\LAEditor::class;
         }
+
+        $this->commands($commands);
+    }
 }

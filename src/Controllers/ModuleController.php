@@ -1,7 +1,10 @@
 <?php
 /**
- * Controller genrated using CRM Admin
- * Help: http://
+ * Code generated using CrmAdmin
+ * Help: http://crmadmin.com
+ * CrmAdmin is open-sourced software licensed under the MIT license.
+ * Developed by: Kipl
+ * Developer Website: http://kipl.com
  */
 
 namespace Kipl\Crmadmin\Controllers;
@@ -19,407 +22,447 @@ use App\Role;
 use Schema;
 use Kipl\Crmadmin\Models\Menu;
 
+/**
+ * Class ModuleController
+ * @package Kipl\Crmadmin\Controllers
+ *
+ */
 class ModuleController extends Controller
 {
 
-	public function __construct() {
-		// for authentication (optional)
-		$this->middleware('auth');
-	}
+    public function __construct()
+    {
+        // for authentication (optional)
+        // $this->middleware('auth');
+    }
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function index()
-	{
-		$modules = Module::all();
+    /**
+     * Display a listing of the Module
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $modules = Module::all();
+        $tables = CAHelper::getDBTables([]);
 
-		return View('ca.modules.index', [
-			'modules' => $modules
-		]);
-	}
+        return View('ca.modules.index', [
+            'modules' => $modules,
+            'tables' => $tables
+        ]);
+    }
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function create()
-	{
-		//
-	}
+    /**
+     * Store a newly created Module
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request)
+    {
+        $module_id = Module::generateBase($request->name, $request->icon);
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @return \Illuminate\Http\Response
-	 */
-	public function store(Request $request)
-	{
-		$module_id = Module::generateBase($request->name, $request->icon);
+        return redirect()->route(config('crmadmin.adminRoute') . '.modules.show', [$module_id]);
+    }
 
-		return redirect()->route(config('crmadmin.adminRoute') . '.modules.show', [$module_id]);
-	}
+    /**
+     * Display the specified Module
+     *
+     * @param $id Module ID
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $ftypes = ModuleFieldTypes::getFTypes2();
+        $module = Module::find($id);
+        $module = Module::get($module->name);
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function show($id)
-	{
-		$ftypes = ModuleFieldTypes::getFTypes2();
-		$module = Module::find($id);
-		$module = Module::get($module->name);
+        $tables = CAHelper::getDBTables([]);
+        $modules = CAHelper::getModuleNames([]);
 
-		$tables = CAHelper::getDBTables([]);
-		$modules = CAHelper::getModuleNames([]);
+        // Get Module Access for all roles
+        $roles = Module::getRoleAccess($id);
 
-		// Get Module Access for all roles
-		$roles = Module::getRoleAccess($id);
+        return view('ca.modules.show', [
+            'no_header' => true,
+            'no_padding' => "no-padding",
+            'ftypes' => $ftypes,
+            'tables' => $tables,
+            'modules' => $modules,
+            'roles' => $roles
+        ])->with('module', $module);
+    }
 
-		return view('ca.modules.show', [
-			'no_header' => true,
-			'no_padding' => "no-padding",
-			'ftypes' => $ftypes,
-			'tables' => $tables,
-			'modules' => $modules,
-			'roles' => $roles
-		])->with('module', $module);
-	}
+    /**
+     * Update the specified Module
+     *
+     * @param \Illuminate\Http\Request $request
+     */
+    public function update(Request $request)
+    {
+        $module = Module::find($request->id);
+        if(isset($module->id)) {
+            $module->label = ucfirst($request->label);
+            $module->fa_icon = $request->icon;
+            $module->save();
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
+            $menu = Menu::where('url', strtolower($module->name))->where('type', 'module')->first();
+            if(isset($menu->id)) {
+                $menu->name = ucfirst($request->label);
+                $menu->icon = $request->icon;
+                $menu->save();
+            }
+        }
+    }
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function update(Request $request, $id)
-	{
-		//
-	}
+    /**
+     * Remove the specified Module Including Module Schema, DB Table,
+     * Controller, Model, Views directory, routes and modifies the migration file.
+     *
+     * @param $id Module ID
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        $module = Module::find($id);
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function destroy($id)
-	{
-		$module = Module::find($id);
+        //Delete Menu
+        $menuItems = Menu::where('name', $module->name)->first();
+        if(isset($menuItems)) {
+            $menuItems->delete();
+        }
 
-		//Delete Menu
-		$menuItems = Menu::where('name', $module->name)->first();
-		if(isset($menuItems)) {
-			$menuItems->delete();
-		}
+        // Delete Module Fields
+        $module_fields = ModuleFields::where('module', $module->id)->delete();
 
-		// Delete Module Fields
-		$module_fields = ModuleFields::where('module',$module->id)->delete();
+        // Delete Resource Views directory
+        \File::deleteDirectory(resource_path('/views/ca/' . $module->name_db));
 
-		// Delete Resource Views directory
-		\File::deleteDirectory(resource_path('/views/ca/' . $module->name_db));
+        // Delete Controller
+        \File::delete(app_path('/Http/Controllers/CA/' . $module->name . 'Controller.php'));
 
-		// Delete Controller
-		\File::delete(app_path('/Http/Controllers/CA/'.$module->name.'Controller.php'));
+        // Delete Model
+        if($module->model == "User" || $module->model == "Role" || $module->model == "Permission") {
+            \File::delete(app_path($module->model . '.php'));
+        } else {
+            \File::delete(app_path('Models/' . $module->model . '.php'));
+        }
 
-		// Delete Model
-		if($module->model == "User" || $module->model == "Role" || $module->model == "Permission") {
-			\File::delete(app_path($module->model.'.php'));
-		} else {
-			\File::delete(app_path('Models/'.$module->model.'.php'));
-		}
+        // Modify Migration for Deletion
+        // Find existing migration file
+        $mfiles = scandir(base_path('database/migrations/'));
+        $fileExistName = "";
+        foreach($mfiles as $mfile) {
+            if(str_contains($mfile, "create_" . $module->name_db . "_table")) {
+                $migrationClassName = ucfirst(camel_case("create_" . $module->name_db . "_table"));
 
-		// Modify Migration for Deletion
-		// Find existing migration file
-		$mfiles = scandir(base_path('database/migrations/'));
-		$fileExistName = "";
-		foreach ($mfiles as $mfile) {
-			if(str_contains($mfile, "create_".$module->name_db."_table")) {
-				$migrationClassName = ucfirst(camel_case("create_".$module->name_db."_table"));
+                $templateDirectory = __DIR__ . '/../stubs';
+                $migrationData = file_get_contents($templateDirectory . "/migration_removal.stub");
+                $migrationData = str_replace("__migration_class_name__", $migrationClassName, $migrationData);
+                $migrationData = str_replace("__db_table_name__", $module->name_db, $migrationData);
+                file_put_contents(base_path('database/migrations/' . $mfile), $migrationData);
+            }
+        }
 
-				$templateDirectory = __DIR__.'/../stubs';
-				$migrationData = file_get_contents($templateDirectory."/migration_removal.stub");
-				$migrationData = str_replace("__migration_class_name__", $migrationClassName, $migrationData);
-				$migrationData = str_replace("__db_table_name__", $module->name_db, $migrationData);
-				file_put_contents(base_path('database/migrations/'.$mfile), $migrationData);
-			}
-		}
+        // Delete Admin Routes
+        if(CAHelper::laravel_ver() == 5.5 || CAHelper::laravel_ver() == 5.6) {
+            $file_admin_routes = base_path("/routes/admin_routes.php");
+        } else {
+            $file_admin_routes = base_path("/app/Http/admin_routes.php");
+        }
+        while(CAHelper::getLineWithString($file_admin_routes, "CA\\" . $module->name . "Controller") != -1) {
+            $line = CAHelper::getLineWithString($file_admin_routes, "CA\\" . $module->name . 'Controller');
+            $fileData = file_get_contents($file_admin_routes);
+            $fileData = str_replace($line, "", $fileData);
+            file_put_contents($file_admin_routes, $fileData);
+        }
+        if(CAHelper::getLineWithString($file_admin_routes, "=== " . $module->name . " ===") != -1) {
+            $line = CAHelper::getLineWithString($file_admin_routes, "=== " . $module->name . " ===");
+            $fileData = file_get_contents($file_admin_routes);
+            $fileData = str_replace($line, "", $fileData);
+            file_put_contents($file_admin_routes, $fileData);
+        }
 
-		// Delete Admin Routes
-		if(CAHelper::laravel_ver() == 5.5) {
-			$file_admin_routes = base_path("/routes/admin_routes.php");
-		} else {
-			$file_admin_routes = base_path("/app/Http/admin_routes.php");
-		}
-		while(CAHelper::getLineWithString($file_admin_routes, "CA\\".$module->name."Controller") != -1) {
-			$line = CAHelper::getLineWithString($file_admin_routes, "CA\\".$module->name.'Controller');
-			$fileData = file_get_contents($file_admin_routes);
-			$fileData = str_replace($line, "", $fileData);
-			file_put_contents($file_admin_routes, $fileData);
-		}
-		if(CAHelper::getLineWithString($file_admin_routes, "=== ".$module->name." ===") != -1) {
-			$line = CAHelper::getLineWithString($file_admin_routes, "=== ".$module->name." ===");
-			$fileData = file_get_contents($file_admin_routes);
-			$fileData = str_replace($line, "", $fileData);
-			file_put_contents($file_admin_routes, $fileData);
-		}
+        // Delete Table
+        if(Schema::hasTable($module->name_db)) {
+            Schema::drop($module->name_db);
+        }
 
-		// Delete Table
-		Schema::drop($module->name_db);
+        // Delete Module
+        $module->delete();
 
-		// Delete Module
-		$module->delete();
+        $modules = Module::all();
+        return redirect()->route(config('crmadmin.adminRoute') . '.modules.index', ['modules' => $modules]);
+    }
 
-		$modules = Module::all();
-		return redirect()->route(config('crmadmin.adminRoute') . '.modules.index', ['modules' => $modules]);
-	}
+    /**
+     * Generate Modules CRUDs Views, Controller, Model, Routes, Menu and Set Default Full Access for Super Admin
+     *
+     * @param $module_id Module ID
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function generate_crud($module_id)
+    {
+        $module = Module::find($module_id);
+        $module = Module::get($module->name);
 
-	/**
-	 * Generate Modules CRUD + Model
-	 *
-	 * @param  int  $module_id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function generate_crud($module_id)
-	{
-		$module = Module::find($module_id);
-		$module = Module::get($module->name);
+        $config = CodeGenerator::generateConfig($module->name, $module->fa_icon);
 
-		$config = CodeGenerator::generateConfig($module->name,$module->fa_icon);
+        CodeGenerator::createController($config);
+        CodeGenerator::createModel($config);
+        CodeGenerator::createViews($config);
+        CodeGenerator::appendRoutes($config);
+        CodeGenerator::addMenu($config);
 
-		CodeGenerator::createController($config);
-		CodeGenerator::createModel($config);
-		CodeGenerator::createViews($config);
-		CodeGenerator::appendRoutes($config);
-		CodeGenerator::addMenu($config);
+        // Set Module Generated = True
+        $module = Module::find($module_id);
+        $module->is_gen = '1';
+        $module->save();
 
-		// Set Module Generated = True
-		$module = Module::find($module_id);
-		$module->is_gen='1';
-		$module->save();
+        // Give Default Full Access to Super Admin
+        $role = Role::where("name", "SUPER_ADMIN")->first();
+        Module::setDefaultRoleAccess($module->id, $role->id, "full");
 
-		// Give Default Full Access to Super Admin
-		$role = Role::where("name", "SUPER_ADMIN")->first();
-		Module::setDefaultRoleAccess($module->id, $role->id, "full");
-	}
+        return response()->json([
+            'status' => 'success'
+        ]);
+    }
 
-	/**
-	 * Generate Modules Migrations
-	 *
-	 * @param  int  $module_id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function generate_migr($module_id)
-	{
-		$module = Module::find($module_id);
-		$module = Module::get($module->name);
-		CodeGenerator::generateMigration($module->name_db, true);
-	}
+    /**
+     * Generate Module Migrations
+     *
+     * @param $module_id Module ID
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function generate_migr($module_id)
+    {
+        $module = Module::find($module_id);
+        $module = Module::get($module->name);
+        CodeGenerator::generateMigration($module->name_db, true);
 
-	/**
-	 * Generate Modules Migrations and CRUD Model
-	 *
-	 * @param  int  $module_id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function generate_migr_crud($module_id)
-	{
-		$module = Module::find($module_id);
-		$module = Module::get($module->name);
+        return response()->json([
+            'status' => 'success'
+        ]);
+    }
 
-		// Generate Migration
-		CodeGenerator::generateMigration($module->name_db, true);
+    /**
+     * Generate Modules Migrations and CRUDs Views, Controller, Model, Routes, Menu and Set Default Full Access
+     * for Super Admin
+     *
+     * @param $module_id Module ID
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function generate_migr_crud($module_id)
+    {
+        $module = Module::find($module_id);
+        $module = Module::get($module->name);
 
-		// Create Config for Code Generation
-		$config = CodeGenerator::generateConfig($module->name,$module->fa_icon);
+        // Generate Migration
+        CodeGenerator::generateMigration($module->name_db, true);
 
-		// Generate CRUD
-		CodeGenerator::createController($config);
-		CodeGenerator::createModel($config);
-		CodeGenerator::createViews($config);
-		CodeGenerator::appendRoutes($config);
-		CodeGenerator::addMenu($config);
+        // Create Config for Code Generation
+        $config = CodeGenerator::generateConfig($module->name, $module->fa_icon);
 
-		// Set Module Generated = True
-		$module = Module::find($module_id);
-		$module->is_gen='1';
-		$module->save();
+        // Generate CRUD
+        CodeGenerator::createController($config);
+        CodeGenerator::createModel($config);
+        CodeGenerator::createViews($config);
+        CodeGenerator::appendRoutes($config);
+        CodeGenerator::addMenu($config);
 
-		// Give Default Full Access to Super Admin
-		$role = Role::where("name", "SUPER_ADMIN")->first();
-		Module::setDefaultRoleAccess($module->id, $role->id, "full");
-	}
-/**
-	 * Generate Modules Update(migrations and crud) not routes
-	 *
-	 * @param  int  $module_id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function generate_update($module_id)
-	{
-		$module = Module::find($module_id);
-		$module = Module::get($module->name);
+        // Set Module Generated = True
+        $module = Module::find($module_id);
+        $module->is_gen = '1';
+        $module->save();
 
-		// Generate Migration
-		CodeGenerator::generateMigration($module->name_db, true);
+        // Give Default Full Access to Super Admin
+        $role = Role::where("name", "SUPER_ADMIN")->first();
+        Module::setDefaultRoleAccess($module->id, $role->id, "full");
 
-		// Create Config for Code Generation
-		$config = CodeGenerator::generateConfig($module->name,$module->fa_icon);
+        return response()->json([
+            'status' => 'success'
+        ]);
+    }
 
-		// Generate CRUD
-		CodeGenerator::createController($config);
-		CodeGenerator::createModel($config);
-		CodeGenerator::createViews($config);
+    /**
+     * Updates Modules all files except routes
+     *
+     * @param $module_id Module ID
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function generate_update($module_id)
+    {
+        $module = Module::find($module_id);
+        $module = Module::get($module->name);
 
-		// Set Module Generated = True
-		$module = Module::find($module_id);
-		$module->is_gen='1';
-		$module->save();
-	}
+        // Generate Migration
+        CodeGenerator::generateMigration($module->name_db, true);
 
-	/**
-	 * Set the model view_column
-	 *
-	 * @param  int  $module_id
-	 * @param string $column_name
-	 * @return \Illuminate\Http\Response
-	 */
-	public function set_view_col($module_id, $column_name){
-		$module = Module::find($module_id);
-		$module->view_col=$column_name;
-		$module->save();
+        // Create Config for Code Generation
+        $config = CodeGenerator::generateConfig($module->name, $module->fa_icon);
 
-		return redirect()->route(config('crmadmin.adminRoute') . '.modules.show', [$module_id]);
-	}
+        // Generate CRUD
+        CodeGenerator::createController($config);
+        CodeGenerator::createModel($config);
+        CodeGenerator::createViews($config);
 
-	public function save_role_module_permissions(Request $request, $id)
-	{
-		$module = Module::find($id);
-		$module = Module::get($module->name);
+        // Set Module Generated = True
+        $module = Module::find($module_id);
+        $module->is_gen = '1';
+        $module->save();
 
-		$tables = CAHelper::getDBTables([]);
-		$modules = CAHelper::getModuleNames([]);
-		$roles = Role::all();
+        return response()->json([
+            'status' => 'success'
+        ]);
+    }
 
-		$now = date("d-m-Y H:i:s");
+    /**
+     * Set the Modules view_column_name
+     *
+     * @param $module_id Module ID
+     * @param $column_name Module's View Column Name
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function set_view_col($module_id, $column_name)
+    {
+        $module = Module::find($module_id);
+        $module->view_col = $column_name;
+        $module->save();
 
-		foreach($roles as $role) {
+        return redirect()->route(config('crmadmin.adminRoute') . '.modules.show', [$module_id]);
+    }
 
-			/* =============== role_module_fields =============== */
+    /**
+     * Save Module-Role Permissions including Module Fields
+     *
+     * @param Request $request
+     * @param $id Module ID
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function save_role_module_permissions(Request $request, $id)
+    {
+        $module = Module::find($id);
+        $module = Module::get($module->name);
 
-			foreach ($module->fields as $field) {
-				$field_name = $field['colname'].'_'.$role->id;
-				$field_value = $request->$field_name;
-				if($field_value == 0) {
-					$access = 'invisible';
-				} else if($field_value == 1) {
-					$access = 'readonly';
-				} else if($field_value == 2) {
-					$access = 'write';
-				}
+        $tables = CAHelper::getDBTables([]);
+        $modules = CAHelper::getModuleNames([]);
+        $roles = Role::all();
 
-				$query = DB::table('role_module_fields')->where('role_id', $role->id)->where('field_id', $field['id']);
-				if($query->count() == 0) {
-					DB::insert('insert into role_module_fields (role_id, field_id, access, created_at, updated_at) values (?, ?, ?, ?, ?)', [$role->id, $field['id'], $access, $now, $now]);
-				} else {
-					DB::table('role_module_fields')->where('role_id', $role->id)->where('field_id', $field['id'])->update(['access' => $access]);
-				}
-			}
+        $now = date("Y-m-d H:i:s");
 
-			/* =============== role_module =============== */
+        foreach($roles as $role) {
 
-			$module_name = 'module_'.$role->id;
-			if(isset($request->$module_name)) {
-				$view = 'module_view_'.$role->id;
-				$create = 'module_create_'.$role->id;
-				$edit = 'module_edit_'.$role->id;
-				$delete = 'module_delete_'.$role->id;
-				if(isset($request->$view)) {
-					$view = 1;
-				} else {
-					$view = 0;
-				}
-				if(isset($request->$create)) {
-					$create = 1;
-				} else {
-					$create = 0;
-				}
-				if(isset($request->$edit)) {
-					$edit = 1;
-				} else {
-					$edit = 0;
-				}
-				if(isset($request->$delete)) {
-					$delete = 1;
-				} else {
-					$delete = 0;
-				}
+            /* =============== role_module_fields =============== */
 
-				$query = DB::table('role_module')->where('role_id', $role->id)->where('module_id', $id);
-				if($query->count() == 0) {
-					DB::insert('insert into role_module (role_id, module_id, acc_view, acc_create, acc_edit, acc_delete, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?)', [$role->id, $id, $view, $create, $edit, $delete, $now, $now]);
-				} else {
-					DB::table('role_module')->where('role_id', $role->id)->where('module_id', $id)->update(['acc_view' => $view, 'acc_create' => $create, 'acc_edit' => $edit, 'acc_delete' => $delete]);
-				}
-			}
-		}
-        return redirect(config('crmadmin.adminRoute') . '/modules/'.$id."#access");
-	}
+            foreach($module->fields as $field) {
+                $field_name = $field['colname'] . '_' . $role->id;
+                $field_value = $request->$field_name;
+                if($field_value == 0) {
+                    $access = 'invisible';
+                } else if($field_value == 1) {
+                    $access = 'readonly';
+                } else if($field_value == 2) {
+                    $access = 'write';
+                }
 
-	public function save_module_field_sort(Request $request, $id)
-	{
-		$sort_array = $request->sort_array;
+                $query = DB::table('role_module_fields')->where('role_id', $role->id)->where('field_id', $field['id']);
+                if($query->count() == 0) {
+                    DB::insert('insert into role_module_fields (role_id, field_id, access, created_at, updated_at) values (?, ?, ?, ?, ?)', [$role->id, $field['id'], $access, $now, $now]);
+                } else {
+                    DB::table('role_module_fields')->where('role_id', $role->id)->where('field_id', $field['id'])->update(['access' => $access]);
+                }
+            }
 
-		foreach ($sort_array as $index => $field_id) {
-			DB::table('module_fields')->where('id', $field_id)->update(['sort' => ($index + 1)]);
-		}
+            /* =============== role_module =============== */
 
-		return response()->json([
-			'status' => 'success'
-		]);
-	}
+            $module_name = 'module_' . $role->id;
+            if(isset($request->$module_name)) {
+                $view = 'module_view_' . $role->id;
+                $create = 'module_create_' . $role->id;
+                $edit = 'module_edit_' . $role->id;
+                $delete = 'module_delete_' . $role->id;
+                if(isset($request->$view)) {
+                    $view = 1;
+                } else {
+                    $view = 0;
+                }
+                if(isset($request->$create)) {
+                    $create = 1;
+                } else {
+                    $create = 0;
+                }
+                if(isset($request->$edit)) {
+                    $edit = 1;
+                } else {
+                    $edit = 0;
+                }
+                if(isset($request->$delete)) {
+                    $delete = 1;
+                } else {
+                    $delete = 0;
+                }
 
-	public function get_module_files(Request $request, $module_id)
-	{
-		$module = Module::find($module_id);
+                $query = DB::table('role_module')->where('role_id', $role->id)->where('module_id', $id);
+                if($query->count() == 0) {
+                    DB::insert('insert into role_module (role_id, module_id, acc_view, acc_create, acc_edit, acc_delete, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?)', [$role->id, $id, $view, $create, $edit, $delete, $now, $now]);
+                } else {
+                    DB::table('role_module')->where('role_id', $role->id)->where('module_id', $id)->update(['acc_view' => $view, 'acc_create' => $create, 'acc_edit' => $edit, 'acc_delete' => $delete]);
+                }
+            }
+        }
+        return redirect(config('crmadmin.adminRoute') . '/modules/' . $id . "#access");
+    }
 
-		$arr = array();
-		$arr[] = "app/Http/Controllers/CA/".$module->controller.".php";
-		$arr[] = "app/Models/".$module->model.".php";
-		$views = scandir(resource_path('views/ca/'.$module->name_db));
-		foreach ($views as $view) {
-			if($view != "." && $view != "..") {
-				$arr[] = "resources/views/ca/".$view;
-			}
-		}
-		// Find existing migration file
-		$mfiles = scandir(base_path('database/migrations/'));
-		$fileExistName = "";
-		foreach ($mfiles as $mfile) {
-			if(str_contains($mfile, "create_".$module->name_db."_table")) {
-				$arr[] = 'database/migrations/' . $mfile;
-			}
-		}
-		return response()->json([
-			'files' => $arr
-		]);
-	}
+    /**
+     * Update Module Field's Sorting Numbers
+     *
+     * @param Request $request
+     * @param $id Module ID
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function save_module_field_sort(Request $request, $id)
+    {
+        $sort_array = $request->sort_array;
+
+        foreach($sort_array as $index => $field_id) {
+            DB::table('module_fields')->where('id', $field_id)->update(['sort' => ($index + 1)]);
+        }
+
+        return response()->json([
+            'status' => 'success'
+        ]);
+    }
+
+    /**
+     * Get Array of all Module Files generated by CrmAdmin
+     *
+     * @param Request $request
+     * @param $module_id Module ID
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function get_module_files(Request $request, $module_id)
+    {
+        $module = Module::find($module_id);
+
+        $arr = array();
+        $arr[] = "app/Http/Controllers/CA/" . $module->controller . ".php";
+        $arr[] = "app/Models/" . $module->model . ".php";
+        $views = scandir(resource_path('views/ca/' . $module->name_db));
+        foreach($views as $view) {
+            if($view != "." && $view != "..") {
+                $arr[] = "resources/views/ca/" . $view;
+            }
+        }
+        // Find existing migration file
+        $mfiles = scandir(base_path('database/migrations/'));
+        $fileExistName = "";
+        foreach($mfiles as $mfile) {
+            if(str_contains($mfile, "create_" . $module->name_db . "_table")) {
+                $arr[] = 'database/migrations/' . $mfile;
+            }
+        }
+        return response()->json([
+            'files' => $arr
+        ]);
+    }
 }

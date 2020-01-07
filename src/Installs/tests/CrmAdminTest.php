@@ -1,10 +1,17 @@
 <?php
+/**
+ * Code generated using CrmAdmin
+ * Help: http://crmadmin.com
+ * CrmAdmin is open-sourced software licensed under the MIT license.
+ * Developed by: KiplIT Solutions
+ * Developer Website: http://dwijitsolutions.com
+ */
 
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class LaraAdminTest extends TestCase
+class CrmAdminTest extends TestCase
 {
 	use DatabaseMigrations;
 
@@ -37,7 +44,7 @@ class LaraAdminTest extends TestCase
     public function testExample()
     {
 		$this->visit('/')
-             ->see('LaraAdmin')
+             ->see('CrmAdmin')
 			 ->see('Taylor Otwell');
     }
 
