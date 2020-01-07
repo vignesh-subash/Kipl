@@ -1,8 +1,8 @@
 <?php
 /**
- * Controller generated using LaraAdmin
+ * Controller generated using CrmAdmin
  * Help: http://crmadmin.com
- * LaraAdmin is open-sourced software licensed under the MIT license.
+ * CrmAdmin is open-sourced software licensed under the MIT license.
  * Developed by: Kipl IT Solutions
  * Developer Website: http://dwijitsolutions.com
  */

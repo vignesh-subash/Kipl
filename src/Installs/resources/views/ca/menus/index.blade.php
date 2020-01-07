@@ -63,7 +63,7 @@ use Kipl\Crmadmin\Models\Module;
 				<div class="dd" id="menu-nestable">
 					<ol class="dd-list">
 						@foreach ($menus as $menu)
-							<?php echo LAHelper::print_menu_editor($menu); ?>
+							<?php echo CAHelper::print_menu_editor($menu); ?>
 						@endforeach
 					</ol>
 				</div>
@@ -113,8 +113,8 @@ use Kipl\Crmadmin\Models\Module;
 @endsection
 
 @push('scripts')
-<script src="{{ asset('la-assets/plugins/nestable/jquery.nestable.js') }}"></script>
-<script src="{{ asset('la-assets/plugins/iconpicker/fontawesome-iconpicker.js') }}"></script>
+<script src="{{ asset('ca-assets/plugins/nestable/jquery.nestable.js') }}"></script>
+<script src="{{ asset('ca-assets/plugins/iconpicker/fontawesome-iconpicker.js') }}"></script>
 <script>
 $(function () {
 	$('input[name=icon]').iconpicker();

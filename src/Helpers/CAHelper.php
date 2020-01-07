@@ -51,7 +51,7 @@ class CAHelper
 
     /**
      * Get list of Database tables excluding CrmAdmin Context tables like
-     * backups, la_configs, la_menus, migrations, modules, module_fields, module_field_types
+     * backups, ca_configs, ca_menus, migrations, modules, module_fields, module_field_types
      * password_resets, permissions, permission_role, role_module, role_module_fields, role_user
      *
      * Method currently supports MySQL and SQLite databases
@@ -367,7 +367,7 @@ class CAHelper
      */
     public static function print_menu_editor($menu)
     {
-        $editing = \Collective\Html\FormFacade::open(['route' => [config('crmadmin.adminRoute') . '.la_menus.destroy', $menu->id], 'method' => 'delete', 'style' => 'display:inline']);
+        $editing = \Collective\Html\FormFacade::open(['route' => [config('crmadmin.adminRoute') . '.ca_menus.destroy', $menu->id], 'method' => 'delete', 'style' => 'display:inline']);
         $editing .= '<button class="btn btn-xs btn-danger pull-right"><i class="fa fa-times"></i></button>';
         $editing .= \Collective\Html\FormFacade::close();
         if($menu->type != "module") {

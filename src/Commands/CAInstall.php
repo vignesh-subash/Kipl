@@ -1,8 +1,8 @@
 <?php
 /**
- * Code generated using LaraAdmin
+ * Code generated using CrmAdmin
  * Help: http://crmadmin.com
- * LaraAdmin is open-sourced software licensed under the MIT license.
+ * CrmAdmin is open-sourced software licensed under the MIT license.
  * Developed by: Kipl IT Solutions
  * Developer Website: http://kiplitsolutions.com
  */
@@ -40,7 +40,7 @@ class CAInstall extends Command
     protected $to;
 
     /**
-     * Generates and Moves files to install LaraAdmin package.
+     * Generates and Moves files to install CrmAdmin package.
      * At the end runs migrations and ask to create Super Admin in order to complete the installation.
      *
      * @throws Exception

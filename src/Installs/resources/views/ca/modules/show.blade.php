@@ -126,7 +126,7 @@ use Kipl\Crmadmin\Models\ModuleFields;
 											</div>
 										</form>
 									</td>
-									<td style="max-width:300px;"><?php echo LAHelper::parseValues($field['popup_vals']) ?></td>
+									<td style="max-width:300px;"><?php echo CAHelper::parseValues($field['popup_vals']) ?></td>
 									<td style="min-width:60px;">
 										<a href="{{ url(config('crmadmin.adminRoute') . '/module_fields/'.$field['id'].'/edit') }}" class="btn btn-edit-field btn-warning btn-xs" style="display:inline;padding:2px 5px 3px 5px;" id="edit_{{ $field['colname'] }}"><i class="fa fa-edit"></i></a>
 										<a href="{{ url(config('crmadmin.adminRoute') . '/module_fields/'.$field['id'].'/delete') }}" class="btn btn-edit-field btn-danger btn-xs" style="display:inline;padding:2px 5px 3px 5px;" id="delete_{{ $field['colname'] }}"><i class="fa fa-trash"></i></a>
@@ -373,8 +373,8 @@ use Kipl\Crmadmin\Models\ModuleFields;
 @endsection
 
 @push('styles')
-<link rel="stylesheet" type="text/css" href="{{ asset('la-assets/plugins/datatables/datatables.min.css') }}"/>
-<link rel="stylesheet" type="text/css" href="{{ asset('la-assets/plugins/bootstrap-slider/slider.css') }}"/>
+<link rel="stylesheet" type="text/css" href="{{ asset('ca-assets/plugins/datatables/datatables.min.css') }}"/>
+<link rel="stylesheet" type="text/css" href="{{ asset('ca-assets/plugins/bootstrap-slider/slider.css') }}"/>
 <style>
 .btn-default{border-color:#D6D3D3}
 .slider .tooltip{display:none !important;}
@@ -407,9 +407,9 @@ use Kipl\Crmadmin\Models\ModuleFields;
 @endpush
 
 @push('scripts')
-<script src="{{ asset('la-assets/plugins/datatables/datatables.min.js') }}"></script>
-<script src="{{ asset('la-assets/plugins/bootstrap-slider/bootstrap-slider.js') }}"></script>
-<script src="{{ asset('la-assets/plugins/jQueryUI/jquery-ui.js') }}"></script>
+<script src="{{ asset('ca-assets/plugins/datatables/datatables.min.js') }}"></script>
+<script src="{{ asset('ca-assets/plugins/bootstrap-slider/bootstrap-slider.js') }}"></script>
+<script src="{{ asset('ca-assets/plugins/jQueryUI/jquery-ui.js') }}"></script>
 
 <script>
 

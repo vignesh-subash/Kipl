@@ -1,6 +1,6 @@
 <?php
 /**
- * Controller genrated using LaraAdmin
+ * Controller genrated using CrmAdmin
  * Help: http://
  */
 

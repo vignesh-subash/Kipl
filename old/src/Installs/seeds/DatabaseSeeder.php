@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
 	public function run()
 	{
 
-		/* ================ LaraAdmin Seeder Code ================ */
+		/* ================ CrmAdmin Seeder Code ================ */
 
 		// Generating Module Menus
 		$modules = Module::all();

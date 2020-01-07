@@ -21,18 +21,18 @@
     <title>{{ CAConfigs::getByKey('sitename') }}</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{{ asset('/la-assets/css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('/ca-assets/css/bootstrap.css') }}" rel="stylesheet">
 
-	<link href="{{ asset('la-assets/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('ca-assets/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
 
     <!-- Custom styles for this template -->
-    <link href="{{ asset('/la-assets/css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('/ca-assets/css/main.css') }}" rel="stylesheet">
 
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
 
-    <script src="{{ asset('/la-assets/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
-    <script src="{{ asset('/la-assets/js/smoothscroll.js') }}"></script>
+    <script src="{{ asset('/ca-assets/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
+    <script src="{{ asset('/ca-assets/js/smoothscroll.js') }}"></script>
 
 
 </head>
@@ -81,14 +81,14 @@
             <div class="col-lg-2">
                 <h5>Amazing Functionalities</h5>
                 <p>for Modern Admin Panels</p>
-                <img class="hidden-xs hidden-sm hidden-md" src="{{ asset('/la-assets/img/arrow1.png') }}">
+                <img class="hidden-xs hidden-sm hidden-md" src="{{ asset('/ca-assets/img/arrow1.png') }}">
             </div>
             <div class="col-lg-8">
-                <img class="img-responsive" src="{{ asset('/la-assets/img/app-bg.png') }}" alt="">
+                <img class="img-responsive" src="{{ asset('/ca-assets/img/app-bg.png') }}" alt="">
             </div>
             <div class="col-lg-2">
                 <br>
-                <img class="hidden-xs hidden-sm hidden-md" src="{{ asset('/la-assets/img/arrow2.png') }}">
+                <img class="hidden-xs hidden-sm hidden-md" src="{{ asset('/ca-assets/img/arrow2.png') }}">
                 <h5>Completely Packaged...</h5>
                 <p>for Future expantion of Modules</p>
             </div>
@@ -131,7 +131,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-5 centered">
-                <img class="centered" src="{{ asset('/la-assets/img/mobile.png') }}" alt="">
+                <img class="centered" src="{{ asset('/ca-assets/img/mobile.png') }}" alt="">
             </div>
 
             <div class="col-lg-7">
@@ -207,7 +207,7 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="{{ asset('/la-assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('/ca-assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
 <script>
     $('.carousel').carousel({
         interval: 3500

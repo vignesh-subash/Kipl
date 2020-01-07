@@ -81,9 +81,9 @@ class Packaging extends Command
         $this->line('Exporting Config...');
         $this->copyFile($from."/config/crmadmin.php", $to."/config/crmadmin.php");
 
-        // la-assets
+        // ca-assets
         $this->line('Exporting CrmAdmin Assets...');
-        $this->replaceFolder($from."/public/la-assets", $to."/la-assets");
+        $this->replaceFolder($from."/public/ca-assets", $to."/ca-assets");
         // Use "git config core.fileMode false" for ignoring file permissions
 
         // migrations

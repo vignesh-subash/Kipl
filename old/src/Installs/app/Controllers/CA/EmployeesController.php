@@ -115,7 +115,7 @@ class EmployeesController extends Controller
 				// Send mail to User his Password
 				Mail::send('emails.send_login_cred', ['user' => $user, 'password' => $password], function ($m) use ($user) {
 					$m->from('hello@kipl.com', 'CRM Admin');
-					$m->to($user->email, $user->name)->subject('LaraAdmin - Your Login Credentials');
+					$m->to($user->email, $user->name)->subject('CrmAdmin - Your Login Credentials');
 				});
 			} else {
 				Log::info("User created: username: ".$user->email." Password: ".$password);

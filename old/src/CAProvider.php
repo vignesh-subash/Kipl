@@ -102,19 +102,19 @@ class CAProvider extends ServiceProvider
         // For Gravatar User Profile Pics
         $loader->alias('Gravatar', \Creativeorange\Gravatar\Facades\Gravatar::class);
 
-        // For LaraAdmin Code Generation
+        // For CrmAdmin Code Generation
         $loader->alias('CodeGenerator', \Kipl\Crmadmin\CodeGenerator::class);
 
-        // For LaraAdmin Form Helper
+        // For CrmAdmin Form Helper
         $loader->alias('CAFormMaker', \Kipl\Crmadmin\CAFormMaker::class);
 
-        // For LaraAdmin Helper
+        // For CrmAdmin Helper
         $loader->alias('CAHelper', \Kipl\Crmadmin\Helpers\CAHelper::class);
 
-        // LaraAdmin Module Model
+        // CrmAdmin Module Model
         $loader->alias('Module', \Kipl\Crmadmin\Models\Module::class);
 
-		    // For LaraAdmin Configuration Model
+		    // For CrmAdmin Configuration Model
 		    $loader->alias('CAConfigs', \Kipl\Crmadmin\Models\CAConfigs::class);
 
         // For Entrust

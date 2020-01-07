@@ -173,9 +173,9 @@ class CAInstall extends Command
 					mkdir($to."/storage/thumbnails");
 				}
 
-				// la-assets
+				// ca-assets
 				$this->line('Generating CRM Admin Public Assets...');
-				$this->replaceFolder($from."/la-assets", $to."/public/la-assets");
+				$this->replaceFolder($from."/ca-assets", $to."/public/ca-assets");
 				// Use "git config core.fileMode false" for ignoring file permissions
 
 				// check CACHE_DRIVER to be array or else
@@ -223,7 +223,7 @@ class CAInstall extends Command
 				$this->call('migrate:refresh');
 				// $this->call('migrate:refresh', ['--seed']);
 
-				// $this->call('db:seed', ['--class' => 'LaraAdminSeeder']);
+				// $this->call('db:seed', ['--class' => 'CrmAdminSeeder']);
 
 				// $this->line('Running seeds...');
 				// $this->info(exec('composer dump-autoload'));
@@ -272,7 +272,7 @@ class CAInstall extends Command
 				// Utilities
 				$this->line('Generating Utilities...');
 				// if(!$this->fileContains($to."/gulpfile.js", "admin-lte/AdminLTE.less")) {
-				if(CAHelper::getLineWithString($to."/gulpfile.js", "mix.less('admin-lte/AdminLTE.less', 'public/la-assets/css');") == -1) {
+				if(CAHelper::getLineWithString($to."/gulpfile.js", "mix.less('admin-lte/AdminLTE.less', 'public/ca-assets/css');") == -1) {
 					$this->appendFile($from."/gulpfile.js", $to."/gulpfile.js");
 				}
 				// Creating Super Admin User

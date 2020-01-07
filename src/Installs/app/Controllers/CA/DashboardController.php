@@ -7,7 +7,7 @@ CrmAdminCrmAdmin<?php
  * Developer Website: http://kipl.com
  */
 
-namespace App\Http\Controllers\LA;
+namespace App\Http\Controllers\CA;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;

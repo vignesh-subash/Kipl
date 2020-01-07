@@ -12,7 +12,7 @@
 
     <meta property="og:url" content="http:///" />
     <meta property="og:sitename" content="crmAdmin" />
-	<meta property="og:image" content="http://demo.adminlte.acacha.org/img/LaraAdmin-600x600.jpg" />
+	<meta property="og:image" content="http://demo.adminlte.acacha.org/img/CrmAdmin-600x600.jpg" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@crmadmin" />
@@ -21,18 +21,18 @@
     <title>{{ CAConfigs::getByKey('sitename') }}</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{{ asset('/la-assets/css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('/ca-assets/css/bootstrap.css') }}" rel="stylesheet">
 
-	<link href="{{ asset('la-assets/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('ca-assets/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
 
     <!-- Custom styles for this template -->
-    <link href="{{ asset('/la-assets/css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('/ca-assets/css/main.css') }}" rel="stylesheet">
 
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
 
-    <script src="{{ asset('/la-assets/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
-    <script src="{{ asset('/la-assets/js/smoothscroll.js') }}"></script>
+    <script src="{{ asset('/ca-assets/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
+    <script src="{{ asset('/ca-assets/js/smoothscroll.js') }}"></script>
 
 
 </head>
@@ -123,7 +123,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-5 centered">
-                <img class="centered" src="{{ asset('/la-assets/img/mobile.png') }}" alt="">
+                <img class="centered" src="{{ asset('/ca-assets/img/mobile.png') }}" alt="">
             </div>
 
             <div class="col-lg-7">
@@ -134,7 +134,7 @@
 					<li>A probable <strong>CRM</strong> System &#8211; Can be evolved into a CRM system like <a target="_blank" href="https://www.sugarcrm.com">SugarCRM</a></li>
 				</ol><br>
 
-				<h3 class="feature-title">Why LaraAdmin ?</h3><br>
+				<h3 class="feature-title">Why CrmAdmin ?</h3><br>
                 <ol class="features">
 					<li><strong>Philosophy:</strong> Inspired by SugarCRM &amp; based on Advanced <strong>Data Types</strong> like Image, HTML, File, Dropdown, TagInput which makes developers job easy. See more in <a target="_blank" href="http://crmadmin.com/features">features</a></li>
 					<li>Superior <strong>CRUD generation</strong> for Modules which generates Migration, Controller, Model and Views with single artisan command and integrates with Routes as as well.</li>
@@ -199,7 +199,7 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="{{ asset('/la-assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('/ca-assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
 <script>
     $('.carousel').carousel({
         interval: 3500

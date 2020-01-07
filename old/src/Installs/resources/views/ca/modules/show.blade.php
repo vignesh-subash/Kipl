@@ -336,8 +336,8 @@ use Kipl\Crmadmin\Models\Module;
 @endsection
 
 @push('styles')
-<link rel="stylesheet" type="text/css" href="{{ asset('la-assets/plugins/datatables/datatables.min.css') }}"/>
-<link rel="stylesheet" type="text/css" href="{{ asset('la-assets/plugins/bootstrap-slider/slider.css') }}"/>
+<link rel="stylesheet" type="text/css" href="{{ asset('ca-assets/plugins/datatables/datatables.min.css') }}"/>
+<link rel="stylesheet" type="text/css" href="{{ asset('ca-assets/plugins/bootstrap-slider/slider.css') }}"/>
 <style>
 .btn-default{border-color:#D6D3D3}
 .slider .tooltip{display:none !important;}
@@ -370,9 +370,9 @@ use Kipl\Crmadmin\Models\Module;
 @endpush
 
 @push('scripts')
-<script src="{{ asset('la-assets/plugins/datatables/datatables.min.js') }}"></script>
-<script src="{{ asset('la-assets/plugins/bootstrap-slider/bootstrap-slider.js') }}"></script>
-<script src="{{ asset('la-assets/plugins/jQueryUI/jquery-ui.js') }}"></script>
+<script src="{{ asset('ca-assets/plugins/datatables/datatables.min.js') }}"></script>
+<script src="{{ asset('ca-assets/plugins/bootstrap-slider/bootstrap-slider.js') }}"></script>
+<script src="{{ asset('ca-assets/plugins/jQueryUI/jquery-ui.js') }}"></script>
 
 <script>
 
