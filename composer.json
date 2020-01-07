@@ -7,7 +7,7 @@
     "support": {
 
     },
-    "version": "2.0.2-x-dev",
+
     "require": {
         "illuminate/support": "5.*",
         "laravelcollective/html": "^5.2|^5.1",
@@ -21,7 +21,7 @@
     "authors": [
         {
             "name": "Vignesh Subash",
-            "email": " "
+            "email": "vignesh.subash@outlook.com"
         }
     ],
     "classmap": [
